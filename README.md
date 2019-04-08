@@ -16,7 +16,7 @@ ___
 I started by building a hash table of all the N possible elements, and implementing a function getHashValue which, I think, will help me build superpermutations more easily and check faster if a superpermutation is valid or not.
 
 
-On `Build_Hash_Permutations.c`
+>On `Build_Hash_Permutations.c`
 
 Trying to figure out how to build an hash and inserting all the elements in exactly N! spaces was kinda harder than expected. I couldn't find any code that gets a value of a permutation, so I build my own from the ground up. It may not be the best, but it works perfectly.
 
@@ -31,8 +31,7 @@ The value of an element is given by the number of unused elements before it. For
 The hash can be built fine with N = 10, but with N = 11 it starts using around 3GB, and with 12 it goes beyond my PC's RAM.
 Still, the computation required for finding a permutation of N>10 elements would require more computing power than currently available.
 
-
-On `Super_Fast_Superpermutation_checker.c`
+>On `Super_Fast_Superpermutation_checker.c`
 
 I used the same code as in `Build_Hash_Permutations.c` and added some small parts to make it work both with capital letters (starting from A) and numbers (starting from 1). I checked it on known superpermutations and it works very well, taking it less than a second to complete.
 
