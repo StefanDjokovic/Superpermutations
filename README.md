@@ -2,6 +2,7 @@
 
 *My Work on Superpermutations (still at the beginning)*
 
+___
 
 Inspired by [Matt Parker's video](https://www.youtube.com/watch?v=OZzIvl1tbPo) I decided to give it a go on trying to find the smallest superpermutation of N elements.
 
@@ -10,9 +11,10 @@ A superpermutation is a string that contains all the possible permutations of an
 
 ___
 
-My work:
+*My work:*
 
 I started by building a hash table of all the N possible elements, and implementing a function getHashValue which, I think, will help me build superpermutations more easily and check faster if a superpermutation is valid or not.
+
 
 On `Build_Hash_Permutations.c`
 
