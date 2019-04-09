@@ -1,20 +1,20 @@
 /*This program finds reliably if a string is a superpermutation is less than a second (tested til N = 8)
 NOTE: to use this code remember to:
 change the value of N to the number of different symbols used on line 12
-place your string between the "" on line 148
-add // in front of line 158 if your string is in A,B,C...; if it's in 1,2,3... don't add anything. If you use another format please contact me and I'll fix it for you
+place your string between the "" on line 149
+This program runs both with capital letters starting from A and numbers starting from 1
 */
 
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 
-#define N 8 //N different characters
+#define N //N different characters, please input it here
 
 //struct of permutations, can be expanded freely
 typedef struct permutation {
 	char string[N + 1];
-	int check = 0;
+	int check;
 } permutation;
 
 //gets factorial of the int passed
@@ -116,7 +116,7 @@ int runChecker(char * str, permutation** hash, int to) {
 		}
 		hashValue = getHashValue(perm);
 		if (hashValue != -1)
-			hash[hashValue]->check = 1;
+			hash[hashValue]->check = hash[hashValue]->check + 1;
 	}
 
 	for (int i = 0; i < factorial(N); i++) {
@@ -141,7 +141,8 @@ int main() {
 		new_perm(i, hash, arr);
 	}
 
-	//printHash(hash);
+	//FILE * fp;
+	//fp = fopen("Destination printed hash", "w");
 
 	char *stringToCheck;
 
@@ -150,19 +151,26 @@ int main() {
 	char * str = (char*)malloc(sizeof(char) * strlen(stringToCheck));
 	strcpy(str, stringToCheck);
 
-	//Please, add // in front of the following line if your string is in letters
-	str = convertString(&stringToCheck);
+	if (str[0] < 'A')
+		str = convertString(&stringToCheck); //converts from numbers to capital letters
 
 	//printf("\n%s\n", str);
 
 	int test = runChecker(str, hash, to);
+
+	//printHash(hash);
+
+	//printHash in file
+	/*for (int i = 0; i < factorial(N); i++) {
+		fprintf(fp, "string %d = %s, check = %d\n", i, hash[i]->string, hash[i]->check);
+	}*/
+
 
 	if (test == 1)
 		printf("\nYes, it's a superpermutation\n");
 	else
 		printf("\nNot a superpermutation\n");
 
-	//printHash(hash);
 
 	return 0;
 }
