@@ -1,6 +1,6 @@
 /*Only for permutation of numbers starting from 1 (switching it to cap letters only is fairly easy)
-just decide the N in line 10 and place your superpermutation in 94
-Attention! If the string is of N > 9 it probably requires to be uploaded from file, istruction line 94*/
+just decide the N in line 10 and place your superpermutation in 78
+Attention! If the string is of N > 9 it probably requires to be uploaded from file, istruction line 82*/
 //For N = 13 it requires around 5GB of RAM 
 
 #include <stdio.h>
@@ -43,18 +43,6 @@ int getHashValue(char * string) {
 		val = val + count * factorial(N - (p + 1));
 	}
 	return val;
-}
-
-//converts string to letters A,B,C...
-char * convertString(char **string) {
-	int to = strlen(*string);
-	char *str = (char*)malloc(sizeof(char) * to);
-	strcpy(str, *string);
-	for (int i = 0; i < to; i++) {
-		str[i] = str[i] - '1' + 'A';
-	}
-
-	return str;
 }
 
 int runChecker(char * str, int * arr, int to) {
