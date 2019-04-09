@@ -1,6 +1,6 @@
 # Superpermutations
 
-*My Work on Superpermutations (still at the beginning)*
+*Currently this repo contains a superpermutation checker written in c, `Build_Hash_Permutations.c`*
 
 ___
 
