@@ -1,18 +1,13 @@
 /*Only for permutation of numbers starting from 1 (switching it to cap letters only is fairly easy)
-just decide the N in line 10 and place your superpermutation in 106
-Attention! If the string is of N > 9 it probably requires to be uploaded from file, istruction line 110*/
-//For N = 12 it requires around 3GB of RAM
+just decide the N in line 10 and place your superpermutation in 94
+Attention! If the string is of N > 9 it probably requires to be uploaded from file, istruction line 94*/
+//For N = 13 it requires around 5GB of RAM 
 
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 
-#define N //N different characters, please input it here
-
-//struct of permutations, can be expanded freely
-typedef struct permutation {
-	int check;
-} permutation;
+#define N  //N different characters, please input it here
 
 //gets factorial of the int passed
 int factorial(int val) {
@@ -21,13 +16,6 @@ int factorial(int val) {
 		res = res * i;
 	}
 	return res;
-}
-
-//adds the new element, more info in README
-void new_perm(int i, permutation ** hash) {
-	permutation * new_vertex = (permutation *)malloc(sizeof(permutation));
-	hash[i] = new_vertex;
-	hash[i]->check = 0;
 }
 
 //function that gets the hashvalue of a string of N elements, returns -1 if invalid permutation
@@ -69,7 +57,7 @@ char * convertString(char **string) {
 	return str;
 }
 
-int runChecker(char * str, permutation** hash, int to) {
+int runChecker(char * str, int * arr, int to) {
 	char *perm = (char*)malloc(sizeof(char)*(N + 1));
 	perm[N] = '\0';
 	int hashValue;
@@ -80,11 +68,11 @@ int runChecker(char * str, permutation** hash, int to) {
 		}
 		hashValue = getHashValue(perm);
 		if (hashValue != -1)
-			hash[hashValue]->check++;
+			arr[hashValue] = 1;
 	}
 
 	for (int i = 0; i < factorial(N); i++) {
-		if (hash[i]->check != 1)
+		if (arr[i]!= 1)
 			return 0;
 	}
 
@@ -96,11 +84,7 @@ int runChecker(char * str, permutation** hash, int to) {
 
 //The main, only for permutation of numbers from 1
 int main() {
-	permutation ** hash = (permutation**)calloc(factorial(N), sizeof(permutation*));
-
-	for (int i = 0; i < factorial(N); i++) {
-		new_perm(i, hash);
-	}
+	int *arr = (int*)calloc(factorial(N), sizeof(int));
 
 	char *stringToCheck;
 	stringToCheck = "";	//place here your string
@@ -114,7 +98,7 @@ int main() {
 	After allocating the string
 	*/
 
-	int test = runChecker(stringToCheck, hash, sizeSup);
+	int test = runChecker(stringToCheck, arr, sizeSup);
 
 	if (test == 1)
 		printf("\nYes, it's a superpermutation\n");
