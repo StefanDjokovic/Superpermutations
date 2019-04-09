@@ -1,7 +1,8 @@
-/*This program finds reliably if a string is a superpermutation is less than a second (tested til N = 8)
+/*Faster version and with less memory requirments available under "Faster_Superpermutation_checker"
+This program finds reliably if a string is a superpermutation is less than a second (tested til N = 8)
 NOTE: to use this code remember to:
-change the value of N to the number of different symbols used on line 13
-place your string between the "" on line 150
+change the value of N to the number of different symbols used on line 14
+place your string between the "" on line 151
 This program runs both with capital letters starting from A and numbers starting from 1
 Bonus: there are functions for printing the hash both on the console and a file, you can enable them by taking away //
 */
