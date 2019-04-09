@@ -150,7 +150,7 @@ int main() {
 	char * str = (char*)malloc(sizeof(char) * strlen(stringToCheck));
 	strcpy(str, stringToCheck);
 
-	//Please, add // in front of the following line if your string is in numbers
+	//Please, add // in front of the following line if your string is in letters
 	str = convertString(&stringToCheck);
 
 	//printf("\n%s\n", str);
