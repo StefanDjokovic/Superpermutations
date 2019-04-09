@@ -37,3 +37,4 @@ I used the same code as in `Build_Hash_Permutations.c` and added some small part
 
 In the first lines of the file there are the instructions on how to run it.
 
+If the string is of N >= 9 an upload from the file may be needed. If someone needs it I can update the program to do it.
