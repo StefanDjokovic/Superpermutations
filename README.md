@@ -1,7 +1,5 @@
 # Superpermutations
 
-*Currently this repo contains a superpermutation checker written in c, `Build_Hash_Permutations.c`*
-
 ___
 
 Inspired by [Matt Parker's video](https://www.youtube.com/watch?v=OZzIvl1tbPo) I decided to give it a go on trying to find the smallest superpermutation of N elements.
