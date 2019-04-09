@@ -1,8 +1,9 @@
 /*This program finds reliably if a string is a superpermutation is less than a second (tested til N = 8)
 NOTE: to use this code remember to:
-change the value of N to the number of different symbols used on line 12
-place your string between the "" on line 149
+change the value of N to the number of different symbols used on line 13
+place your string between the "" on line 150
 This program runs both with capital letters starting from A and numbers starting from 1
+Bonus: there are functions for printing the hash both on the console and a file, you can enable them by taking away //
 */
 
 #include <stdio.h>
@@ -13,8 +14,8 @@ This program runs both with capital letters starting from A and numbers starting
 
 //struct of permutations, can be expanded freely
 typedef struct permutation {
-	char string[N + 1];
-	int check;
+	char string[N + 1];	
+	int check;		// check >= 1 if the permutation was found in the string
 } permutation;
 
 //gets factorial of the int passed
@@ -130,7 +131,6 @@ int runChecker(char * str, permutation** hash, int to) {
 }
 
 
-//The main
 int main() {
 	permutation ** hash = (permutation**)calloc(factorial(N), sizeof(permutation*));
 
@@ -153,8 +153,6 @@ int main() {
 
 	if (str[0] < 'A')
 		str = convertString(&stringToCheck); //converts from numbers to capital letters
-
-	//printf("\n%s\n", str);
 
 	int test = runChecker(str, hash, to);
 
