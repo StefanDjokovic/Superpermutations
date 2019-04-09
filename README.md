@@ -17,11 +17,11 @@ I started by building a hash table of all the N possible elements, and implement
 
 >On `Faster_SuperPermutation_Checker.c`
 
-Based on `Fast_Superpermutation_checker.c` but reducing the memory usage by taking away the string in the struct, just the hashValue function is sufficient.
+Based on `Superpermutation_checker.c` but reducing the memory usage by taking away the string in the struct, just the hashValue function is sufficient.
 
 Because most of the superpermutations generated are number based I decided to make this implementation numbers-only. Implementing letters requires just a couple of adds in the hashValue function.
 
->On `Fast_Superpermutation_checker.c`
+>On `Superpermutation_checker.c`
 
 I used the same code as in `Build_Hash_Permutations.c` and added some small parts to make it work both with capital letters (starting from A) and numbers (starting from 1). I checked it on known superpermutations and it works very well, taking it less than a second to complete.
 
