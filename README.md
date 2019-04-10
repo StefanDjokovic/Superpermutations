@@ -11,13 +11,13 @@ ___
 
 *My work:*
 
-I started by building a hash table of all the N possible elements, and implementing a function getHashValue which works extremly well for N<11
-
->On `Faster_SuperPermutation_Checker.c`
+>On `SupPerm_Checker.c` && `SupPerm_Checker-from-file.c`
 
 Based on `Superpermutation_checker.c` but reducing the memory usage by taking away the string in the struct, just the hashValue function is sufficient.
 
 Because most of the superpermutations generated are number based I decided to make this implementation numbers-only. Implementing letters requires just a couple of adds in the hashValue function.
+
+In the "from-file" version the file directory and N should be inserted from standard input.
 
 >On `Superpermutation_checker.c`
 
