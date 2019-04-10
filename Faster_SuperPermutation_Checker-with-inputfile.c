@@ -1,5 +1,5 @@
 /*Based on Faster_SuperPermutation_Checker, you need to put a value to N in line 11 and insert file directory to 88
-There are still many improvments to implement, coming soon
+Haven't tested it fully yet, only on perm of N =9; also there are still many improvments to implement, coming soon
 */
 
 
