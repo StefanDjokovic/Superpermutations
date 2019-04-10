@@ -42,3 +42,8 @@ The value of an element is given by the number of unused elements before it. For
 The hash can be built fine with N = 10, but with N = 11 it starts using around 3GB, and with 12 it goes beyond my PC's RAM.
 Still, the computation required for finding a permutation of N>10 elements would require more computing power than currently available.
 
+___
+
+A graphic explanation of the getHashValue function
+
+![image](https://i.imgur.com/QQyH8UT.jpg)
