@@ -19,7 +19,7 @@ Because most of the superpermutations generated are number based I decided to ma
 
 In the "from-file" version the file directory and N should be inserted from standard input.
 
->On `Superpermutation_checker.c`
+>On `Superpermutation_checker.c`, older code
 
 I used the same code as in `Build_Hash_Permutations.c` and added some small parts to make it work both with capital letters (starting from A) and numbers (starting from 1). I checked it on known superpermutations and it works very well, taking it less than a second to complete.
 
