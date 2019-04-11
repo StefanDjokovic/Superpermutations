@@ -11,6 +11,33 @@ ___
 
 *My work:*
 
+>On `SupPerm_Checker-from-file.c` and the 11/04/2019 improvements
+
+`SupPerm_Checker-from-file.c` takes the file directory from standard input, the value of N, and prints out if the permutations found are valid superpermutations. The source file should contain one superpermutation per line, and the code can also ignore # comment lines. The superpermutations should be made of numbers starting from 1 (easily interchangeble to letters, read comments in code). There is no error-handling for wrong N input, so please be sure to insert the right one.
+
+The program runs until the EOF, and prints in output the number of permutation and if it's a superpermutation. The two main important functions used are:
+* runChecker: it's the function that evaluates if the string recieved is a superpermutation by running getHashValue for every block of N
+* getHashValue: gets the unique code of permutation of each blocks and returns it, -1 if there are at least two identical characters in the block
+
+>on the recent improvements of `SupPerm_Checker-from-file.c`
+
+By storing the N possible values of factorial in an array and passing it to the funciton there was a 0.2X speed boost. The main speed boost (of over 2X on all test types) came by allocating the checker array only once and zeroing it after each array run. 
+
+Some stats on the improvement:
+* on 270 superpermutation of N = 9: from 73s to 32s
+* on 1024 superpermutation of N = 6: from 457ms to 180 ms
+
+I've tried other changes to improve the speed (e.g. building a matrix of all the possible values of N * factorial(all the possible values of N)) but the was no noticable improvement. Also I tried changing a bit of the getHashValue structure, in particular on how it counts the number of values it has used, but for now I couldn't find a better solution.
+
+Also a big thank you to Miles Gould from the Superpermutators Google Group who gave me some interesting inputs on how to improve the code.
+
+A graphic explanation of the getHashValue function
+
+![image](https://i.imgur.com/QQyH8UT.jpg)
+
+
+>Older code comments
+
 >On `SupPerm_Checker.c` && `SupPerm_Checker-from-file.c`
 
 Based on `Superpermutation_checker.c` but reducing the memory usage by taking away the string in the struct, just the hashValue function is sufficient.
@@ -44,6 +71,3 @@ Still, the computation required for finding a permutation of N>10 elements would
 
 ___
 
-A graphic explanation of the getHashValue function
-
-![image](https://i.imgur.com/QQyH8UT.jpg)
