@@ -19,7 +19,7 @@ The program runs until the EOF, and prints in output the number of permutation a
 * runChecker: it's the function that evaluates if the string recieved is a superpermutation by running getHashValue for every block of N
 * getHashValue: gets the unique code of permutation of each blocks and returns it, -1 if there are at least two identical characters in the block
 
->on the recent improvements of `SupPerm_Checker-from-file.c`
+>on the recent improvements of `SupPerm_Checker-from-file.c` compared to the previous code
 
 By storing the N possible values of factorial in an array and passing it to the funciton there was a 0.2X speed boost. The main speed boost (of over 2X on all test types) came by allocating the checker array only once and zeroing it after each array run. 
 
