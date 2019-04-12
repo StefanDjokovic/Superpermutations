@@ -1,4 +1,6 @@
-//The checker can now take file directory and N from standard input and ignores #comments
+//The program takes file directory and N from standard input and is able to ignores # comments lines
+//It outputs the number of the permutation taken in consideration and if it is a superpermutation
+//more info on how it works in README
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -16,12 +18,10 @@ long int getHashValue(int * string, int N, int * factval, bool * arr);
 int runChecker(int * str, bool * arr, int to, int N, int * factval, int * perm);
 
 
-//The main, only for permutation of numbers from 1
 int main() {
-	int N;
+	int N;	//number of different elements 
 
 	FILE * fp;
-
 	char filepos[300];
 	printf("Please, specify file directory (example: C:\\Users\\...:\n");
 	scanf("%149[^\n]%*c", filepos);
@@ -66,44 +66,40 @@ int main() {
 		}
 		c = fgetc(fp);
 	}
-
+	
+	
 	int *perm = (int*)malloc(sizeof(int)*(N + 1));
 	bool *checker = (bool*)malloc(factval[N] * sizeof(bool));
 	for (int j = 1; c != EOF; j++) {
 		for (int i = 0; i < factval[N]; i++)
 			checker[i] = 0;
-		//bool *checker = (bool*)calloc(factval[N], sizeof(bool));
 
 		int * stringToCheck = (int *)malloc((size) * sizeof(int));
+		//converting the string in ints from 0
 		stringToCheck[0] = c - '1';
 		for (int i = 1; i < size; i++) {
 			stringToCheck[i] = fgetc(fp) - '1'; //if in letters change 1 into A
 		}
-		/*for (int i = 0; i < size; i++) {
-			printf("%d", stringToCheck[i]);
-		}
-		printf("\n");*/
-
+		
+		//test = 1 if valid superperm, else 0
 		int test = runChecker(stringToCheck, checker, size, N, factval, perm);
-
-		/*if (test == 1)
+		
+		//printing result
+		if (test == 1)
 			printf("Perm %d : Yes, it's a superpermutation\n", j);
 		else
-			printf("Perm %d : Not a superpermutation\n", j);*/
+			printf("Perm %d : Not a superpermutation\n", j);
 
 		free(stringToCheck);
 
-		//free(checker);
-
 		c = fgetc(fp); //clearing from /n
-		c = fgetc(fp);
+		c = fgetc(fp);	//gets the first character of the new line, EOF if it's the end
 	}
 
 	fclose(fp);
 
 	return 0;
 }
-
 
 
 int runChecker(int * str, bool * arr, int to, int N, int * factval, int * perm) {
