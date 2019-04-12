@@ -104,6 +104,7 @@ int main() {
 
 int runChecker(int * str, bool * arr, int to, int N, int * factval, int * perm) {
 	long int hashValue;
+	int z = N - 1;	//reducing the time it takes for getHashValue by ca 2%
 
 	bool *hashvaluearr = (bool*)calloc(N, sizeof(bool));
 
@@ -111,7 +112,7 @@ int runChecker(int * str, bool * arr, int to, int N, int * factval, int * perm) 
 		for (int i = 0; i < N; i++) {
 			perm[i] = str[j + i];
 		}
-		hashValue = getHashValue(perm, N, factval, hashvaluearr);
+		hashValue = getHashValue(perm, N, factval, hashvaluearr, z);
 		if (hashValue != -1)
 			arr[hashValue] = 1;
 
@@ -130,27 +131,29 @@ int runChecker(int * str, bool * arr, int to, int N, int * factval, int * perm) 
 }
 
 //how it works in README
-long int getHashValue(int * string, int N, int * factval, bool * arr) {
+long int getHashValue(int * string, int N, int * factval, bool * arr, int z) {
 	long int val = 0;
 
 	val = (string[0]) * factval[N - 1];
 	arr[string[0]] = 1;
-
-	for (int p = 1; p < N; p++) { 
-		int k = 0;
+	for (int p = 1; p < N; p++) {			
 		int count = 0;
 		int step = string[p];
-		while (k != step) {
-			if (arr[k] != 1)
-				count++;
-			k++;
+		if (p != z) {
+			int k = 0;
+
+			while (k != step) {
+				if (arr[k] != 1)
+					count++;
+				k++;
+			}
 		}
 		if (arr[step] == 0)
 			arr[step] = 1;
 		else
 			return -1;
 
-		val = val + count * factval[N - (p + 1)];	
+		val = val + count * factval[N - (p + 1)];
 	}
 
 	return val;
