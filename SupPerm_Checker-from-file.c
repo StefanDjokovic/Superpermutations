@@ -12,7 +12,7 @@
 int factorial(int val);
 
 //function that gets a specific hashvalue of a string of N elements, returns -1 if invalid permutation, more info in README
-long int getHashValue(int * string, int N, int * factval, bool * arr);
+long int getHashValue(int * string, int N, int * factval, bool * arr, int z);
 
 //the checker function
 int runChecker(int * str, bool * arr, int to, int N, int * factval, int * perm);
@@ -66,8 +66,8 @@ int main() {
 		}
 		c = fgetc(fp);
 	}
-	
-	
+
+
 	int *perm = (int*)malloc(sizeof(int)*(N + 1));
 	bool *checker = (bool*)malloc(factval[N] * sizeof(bool));
 	for (int j = 1; c != EOF; j++) {
@@ -80,10 +80,10 @@ int main() {
 		for (int i = 1; i < size; i++) {
 			stringToCheck[i] = fgetc(fp) - '1'; //if in letters change 1 into A
 		}
-		
+
 		//test = 1 if valid superperm, else 0
 		int test = runChecker(stringToCheck, checker, size, N, factval, perm);
-		
+
 		//printing result
 		if (test == 1)
 			printf("Perm %d : Yes, it's a superpermutation\n", j);
@@ -104,7 +104,7 @@ int main() {
 
 int runChecker(int * str, bool * arr, int to, int N, int * factval, int * perm) {
 	long int hashValue;
-	int z = N - 1;	//reducing the time it takes for getHashValue by ca 2%
+	int z = N - 1; //reducing the time it takes for getHashValue by ca 2%
 
 	bool *hashvaluearr = (bool*)calloc(N, sizeof(bool));
 
