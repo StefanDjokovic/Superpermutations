@@ -12,14 +12,18 @@
 int factorial(int val);
 
 //function that gets a specific hashvalue of a string of N elements, returns -1 if invalid permutation, more info in README
-long int getHashValue(int * string, int N, int * factval, bool * arr, int z);
+long int getHashValue(int * string);
 
 //the checker function
-int runChecker(int * str, bool * arr, int to, int N, int * factval, int * perm);
+int runChecker(int * str, bool * checker, int to);
 
+int z; //N-1
+bool * arr;
+int N;
+int *factval;
 
 int main() {
-	int N;	//number of different elements 
+	//int N;	//number of different elements 
 
 	FILE * fp;
 	char filepos[300];
@@ -29,13 +33,16 @@ int main() {
 	printf("\nPlease, specify N (number of different symbols):\n");
 	scanf("%d", &N);
 
+	z = N - 1;
+
 	fp = fopen(filepos, "r");
 	if (fp == NULL) {
 		printf("File not found\n");
 		return -1;
 	}
 
-	int * factval = (int*)malloc((N + 1) * sizeof(int)); //contains factorial values
+	//contains factorial values from 0! to N!
+	factval = (int*)malloc((N + 1) * sizeof(int)); 
 	for (int i = 0; i <= N; i++) {
 		factval[i] = factorial(i);
 	}
@@ -68,8 +75,8 @@ int main() {
 	}
 
 
-	int *perm = (int*)malloc(sizeof(int)*(N + 1));
 	bool *checker = (bool*)malloc(factval[N] * sizeof(bool));
+	arr = (bool*)malloc(N * sizeof(bool));
 	for (int j = 1; c != EOF; j++) {
 		for (int i = 0; i < factval[N]; i++)
 			checker[i] = 0;
@@ -82,13 +89,13 @@ int main() {
 		}
 
 		//test = 1 if valid superperm, else 0
-		int test = runChecker(stringToCheck, checker, size, N, factval, perm);
+		int test = runChecker(stringToCheck, checker, size);
 
 		//printing result
-		if (test == 1)
+		/*if (test == 1)
 			printf("Perm %d : Yes, it's a superpermutation\n", j);
 		else
-			printf("Perm %d : Not a superpermutation\n", j);
+			printf("Perm %d : Not a superpermutation\n", j);*/
 
 		free(stringToCheck);
 
@@ -102,26 +109,20 @@ int main() {
 }
 
 
-int runChecker(int * str, bool * arr, int to, int N, int * factval, int * perm) {
+int runChecker(int * str, bool * checker, int to) {
 	long int hashValue;
-	int z = N - 1; //reducing the time it takes for getHashValue by ca 2%
-
-	bool *hashvaluearr = (bool*)calloc(N, sizeof(bool));
 
 	for (int j = 0; j <= to - N; j++) {
-		for (int i = 0; i < N; i++) {
-			perm[i] = str[j + i];
-		}
-		hashValue = getHashValue(perm, N, factval, hashvaluearr, z);
+		hashValue = getHashValue(&str[j]); 
 		if (hashValue != -1)
-			arr[hashValue] = 1;
+			checker[hashValue] = 1;
 
 		for (int i = 0; i < N; i++)
-			hashvaluearr[i] = 0;
+			arr[i] = 0;
 	}
 
 	for (int i = 0; i < factval[N]; i++) {
-		if (arr[i] != 1) {
+		if (checker[i] != 1) {
 			return 0;
 		}
 
@@ -131,10 +132,10 @@ int runChecker(int * str, bool * arr, int to, int N, int * factval, int * perm) 
 }
 
 //how it works in README
-long int getHashValue(int * string, int N, int * factval, bool * arr, int z) {
+long int getHashValue(int * string) {
 	long int val = 0;
 
-	val = (string[0]) * factval[N - 1];
+	val = (string[0]) * factval[z];
 	arr[string[0]] = 1;
 	for (int p = 1; p < N; p++) {			
 		int count = 0;
@@ -153,7 +154,7 @@ long int getHashValue(int * string, int N, int * factval, bool * arr, int z) {
 		else
 			return -1;
 
-		val = val + count * factval[N - (p + 1)];
+		val = val + count * factval[z - p];
 	}
 
 	return val;
@@ -166,3 +167,4 @@ int factorial(int val) {
 	}
 	return res;
 }
+
