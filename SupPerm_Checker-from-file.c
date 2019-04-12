@@ -23,8 +23,6 @@ int N;
 int *factval;
 
 int main() {
-	//int N;	//number of different elements 
-
 	FILE * fp;
 	char filepos[300];
 	printf("Please, specify file directory (example: C:\\Users\\...:\n");
