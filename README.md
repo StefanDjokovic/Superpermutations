@@ -24,8 +24,8 @@ The program runs until the EOF, and prints in output the number of permutation a
 By storing the N possible values of factorial in an array and passing it to the funciton there was a 0.2X speed boost. The main speed boost (of over 2X on all test types) came by allocating the checker array only once and zeroing it after each array run. 
 
 Some stats on the improvement:
-* on 270 superpermutation of N = 9: from 73s to 32s
-* on 1024 superpermutation of N = 6: from 457ms to 180 ms
+* on 270 superpermutation of N = 9: from 73s to 32s (with 12/04 edits down to 29s)
+* on 1024 superpermutation of N = 6: from 457ms to 180 ms (with 12/04 edits down to 160ms)
 
 I've tried other changes to improve the speed (e.g. building a matrix of all the possible values of N * factorial(all the possible values of N)) but the was no noticable improvement. Also I tried changing a bit of the getHashValue structure, in particular on how it counts the number of values it has used, but for now I couldn't find a better solution.
 
