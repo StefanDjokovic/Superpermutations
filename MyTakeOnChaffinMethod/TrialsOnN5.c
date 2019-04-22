@@ -1,3 +1,6 @@
+//!!! I just noticed this version contains a bug when looking for the hashValue of connected4 !!!
+//The result is correct, but just for pure casuality
+
 //Still working on it, for now trying to improve for N = 5
 //This code has improved the speed of the original Chaffin code by x4 for N = 5
 //It works but there are many things to improve, uploading this just for reference
