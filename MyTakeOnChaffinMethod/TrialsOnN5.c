@@ -119,129 +119,10 @@ void builddong(int * conn) {
 	}
 }
 
-
-/*void fillStr2(short int pos, short int pfound, int hashValue, int waste);
-void fillStr3(short int pos, short int pfound, int hashValue, int waste);*/
-
-
-/*void fillStr1(short int pos, short int pfound, int hashValue, int waste) {
-	for (int i = 0; i < N; i++) {
-		if (curstr[pos - 1] != i) {
-			curstr[pos] = i;
-
-			if (curstr[pos] == curstr[pos - N]) {
-				hashValue = getHashValue2(&curstr[pos - N + 1]);
-				if (checker[hashValue] == 0) {
-					checker[hashValue] = 1;
-					fillStr1(pos + 1, pfound + 1, hashValue, waste);
-					checker[hashValue] = 0;
-				}	
-			}
-			else if (curstr[pos] == curstr[pos - N + 1]) {
-				if (waste - 1 >= 0)
-					fillStr2(pos + 1, pfound, hashValue, waste - 1);
-			}
-			else if (curstr[pos] == curstr[pos - N + 2]) {
-				if (waste - 2 >= 0)
-					fillStr3(pos + 1, pfound, hashValue, waste - 2);
-			}
-		}
-	}
-}*/
-
-/*void fillStr2(short int pos, short int pfound, int hashValue, int waste) {
-	int pos2 = pos + 1;
-	curstr[pos] = curstr[pos - N - 1];
-	hashValue = getHashValue2(&curstr[pos - N + 1]);
-	if (checker[hashValue == 0]) {
-		checker[hashValue] = 1;
-		for (int i = 0; i < N; i++) {
-			if (curstr[pos] != i) {
-				curstr[pos2] = i;
-
-				if (curstr[pos2] == curstr[pos2 - N]) {
-					fillStr1(pos2 + 1, pfound + 1, hashValue, waste);
-				}
-				else if (curstr[pos2] == curstr[pos2 - N + 1]) {
-					if (waste - 1 >= 0)
-						fillStr2(pos2 + 1, pfound + 1, hashValue, waste - 1);
-				}
-				else if (curstr[pos] == curstr[pos - N + 2]) {
-					if (waste - 2 >= 0)
-						fillStr3(pos2 + 1, pfound + 1, hashValue, waste - 2);
-				}
-			}
-		}
-		checker[hashValue] = 0;
-	}
-}
-*/
-/*void fillStr3(short int pos, short int pfound, int hashValue, int waste) {
-	int pos3 = pos + 2;
-	curstr[pos] = curstr[pos - N - 1];
-	curstr[pos + 1] = curstr[pos - N];
-	hashValue = getHashValue2(&curstr[pos - N + 2]);
-	if (checker[hashValue] == 0) {
-		checker[hashValue] = 1;
-		for (int i = 0; i < N; i++) {
-			if (curstr[pos + 1] != i) {
-				curstr[pos3] = i;
-
-				if (curstr[pos3] == curstr[pos3 - N]) {
-					fillStr1(pos3 + 1, pfound + 1, hashValue, waste);
-				}
-				else if (curstr[pos3] == curstr[pos3 - N + 1]) {
-					if (waste - 1 >= 0)
-						fillStr2(pos3 + 1, pfound + 1, hashValue, waste - 1);
-					else
-						max(max_perm, pfound + 1);
-				}
-				else if (curstr[pos] == curstr[pos - N + 2]) {
-					if (waste - 2 >= 0)
-						fillStr3(pos3 + 1, pfound + 1, hashValue, waste - 2);
-					else
-						max(max_perm, pfound + 1);
-				}
-			}
-		}
-
-		checker[hashValue] = 0;
-	}
-
-	curstr[pos] = curstr[pos - N];
-	curstr[pos + 1] = curstr[pos - N - 1];
-	hashValue = getHashValue2(&curstr[pos - N + 2]);
-	if (checker[hashValue] == 0) {
-		checker[hashValue] = 1;
-		for (int i = 0; i < N; i++) {
-			if (curstr[pos + 1] != i) {
-				curstr[pos3] = i;
-
-				if (curstr[pos3] == curstr[pos3 - N]) {
-					fillStr1(pos3 + 1, pfound + 1, hashValue, waste);
-				}
-				else if (curstr[pos3] == curstr[pos3 - N + 1]) {
-					if (waste - 1 >= 0)
-						fillStr2(pos3 + 1, pfound + 1, hashValue, waste - 1);
-					else
-						max(max_perm, pfound + 1);
-				}
-				else if (curstr[pos] == curstr[pos - N + 2]) {
-					if (waste - 2 >= 0)
-						fillStr3(pos3 + 1, pfound + 1, hashValue, waste - 2);
-					else
-						max(max_perm, pfound + 1);
-				}
-			}
-		}
-		checker[hashValue] = 0;
-	}
-}*/
-
 //this is the starting fillStr call
 void fillStr0(short int pos, short int pfound, int hashValue, int waste) {
 	max(max_perm, pfound, pos);
-	if ((waste == tot_bl || (mperm_res[waste] + pfound > max_perm && mperm_res[waste] + pfound > mperm_res[tot_bl - 1] + 2) && stopit)) {
+	if ((waste == tot_bl || (mperm_res[waste] + pfound > max_perm && mperm_res[waste] + pfound > mperm_res[tot_bl - 1] + 2) && max_perm < stopit)) {
 		int minihash = hashValue;	
 		for (int i = 0; i < N; i++) {
 			if (i != curstr[pos - 1]) {
@@ -249,9 +130,6 @@ void fillStr0(short int pos, short int pfound, int hashValue, int waste) {
 	
 				if (curstr[pos] == curstr[pos - N]) {
 					hashValue = connected1[minihash];
-					//printf("%d ", hashValue);
-					//hashValue = getHashValue2(&curstr[pos - N + 1]);
-					
 					if (checker[hashValue] == 0) {
 						checker[hashValue] = 1;
 						fillStr0(pos + 1, pfound+1, hashValue, waste);
@@ -259,7 +137,7 @@ void fillStr0(short int pos, short int pfound, int hashValue, int waste) {
 					}				
 				}
 				else if (curstr[pos] == curstr[pos - N + 1]) {
-					if (waste - 1 >= 0) {
+					if (waste - 1 >= 0 (mperm_res[waste-1] + pfound > max_perm && mperm_res[waste-1] + pfound > mperm_res[tot_bl - 1] + 2)) {
 						curstr[pos + 1] = curstr[pos - N];
 						hashValue = connected2[minihash];
 						if (checker[hashValue] == 0) {
@@ -270,7 +148,7 @@ void fillStr0(short int pos, short int pfound, int hashValue, int waste) {
 					}			
 				}
 				else if (curstr[pos] == curstr[pos - N + 2]) {
-					if (waste - 2 >= 0) {
+					if (waste - 2 >= 0 (mperm_res[waste-2] + pfound > max_perm && mperm_res[waste-2] + pfound > mperm_res[tot_bl - 1] + 2)) {
 						hashValue = connected3[minihash];
 						if (checker[hashValue] == 0) {
 							if (curstr[pos - N] < curstr[pos - N + 1]) {
@@ -308,7 +186,7 @@ void fillStr0(short int pos, short int pfound, int hashValue, int waste) {
 					}
 				}
 				else if (curstr[pos] == curstr[pos - N + 3]) {
-					if (waste - 3 >= 0) {
+					if (waste - 3 >= 0 && (mperm_res[waste-3] + pfound > max_perm && mperm_res[waste-3] + pfound > mperm_res[tot_bl - 1] + 2)) {
 						hashValue = connected4[minihash];
 						builddong(&curstr[pos - N]);
 						if (checker[hashValue] == 0) {
