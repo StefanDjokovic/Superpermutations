@@ -1,8 +1,6 @@
 # Superpermutations
 
-___
-
-Inspired by [Matt Parker's video](https://www.youtube.com/watch?v=OZzIvl1tbPo) I decided to give it a go on trying to find the smallest superpermutation of N elements.
+Inspired by [Matt Parker's video](https://www.youtube.com/watch?v=OZzIvl1tbPo) I decided to give a go to the "shortest superpermutation problem".
 
 
 A superpermutation is a string that contains all the possible permutations of an initial string. Finding the smallest superpermutation is still an open problem for values larger than 5, and researchers are still looking both into finding them and maths proofs. More infos can be found on the internet, in particular on [Numberphile's YT channel](https://www.youtube.com/user/numberphile), [Matt Parker's YT channel](https://www.youtube.com/user/standupmaths/videos) and this [Google group](https://groups.google.com/forum/#!forum/superpermutators)
@@ -10,6 +8,14 @@ A superpermutation is a string that contains all the possible permutations of an
 ___
 
 *My work:*
+
+>On MyTakeOnChaffinMethod
+
+Ben Chaffin was the first to show with code that the minimum length of a superpermutation of N = 5 is 153. To prove it he designed the code available here http://www.njohnston.ca/2014/08/all-minimal-superpermutations-on-five-symbols-have-been-found/
+
+Starting from it and organizing it with my permutation checker I tried to improve the root speed of this system, and the result, as of the 22/04 edits, it's roughly a x6 improvement on N = 5. It still needs some work and it can be still be improved.
+
+A better improvement of the ChaffinMethod can be found here https://github.com/superpermutators/superperm/tree/master/ChaffinMethod which is way faster than mine.
 
 >On `SupPerm_Checker-from-file.c` and the 11/04/2019 improvements
 
