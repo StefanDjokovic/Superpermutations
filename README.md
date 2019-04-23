@@ -3,19 +3,22 @@
 Inspired by [Matt Parker's video](https://www.youtube.com/watch?v=OZzIvl1tbPo) I decided to give a go to the "shortest superpermutation problem".
 
 
-A superpermutation is a string that contains all the possible permutations of an initial string. Finding the smallest superpermutation is still an open problem for values larger than 5, and researchers are still looking both into finding them and maths proofs. More infos can be found on the internet, in particular on [Numberphile's YT channel](https://www.youtube.com/user/numberphile), [Matt Parker's YT channel](https://www.youtube.com/user/standupmaths/videos) and this [Google group](https://groups.google.com/forum/#!forum/superpermutators)
+A superpermutation is a string that contains all the possible permutations of an initial string. Finding the smallest superpermutation is still an open problem for values larger than 5, and researchers are still looking both into finding them and Maths proofs. More infos can be found on the internet, in particular on [Numberphile's YT channel](https://www.youtube.com/user/numberphile), [Matt Parker's YT channel](https://www.youtube.com/user/standupmaths/videos) and this [Google group](https://groups.google.com/forum/#!forum/superpermutators)
 
 ___
 
-*My work:*
+**My work:**
 
->On MyTakeOnChaffinMethod
+>MyTakeOnChaffinMethod folder
 
 Ben Chaffin was the first to show with code that the minimum length of a superpermutation of N = 5 is 153. To prove it he designed the code available here http://www.njohnston.ca/2014/08/all-minimal-superpermutations-on-five-symbols-have-been-found/
 
-Starting from it and organizing it with my permutation checker I tried to improve the root speed of this system, and I was able to get it down to roughly 2s. It still needs some work and it can be still be improved.
+Based on the idea of "wasted characters" and the indexing of permutations I designed my own solution. My code takes, as of the 23/04 updates, 0.2s to complete with N = 5 and it takes roughly 8 minutes to get to w = 101. To actually solve the problem it will still take some work, but I'm confident that it's possible to arrive to the solution through some optimization.
 
-A better improvement of the ChaffinMethod can be found here https://github.com/superpermutators/superperm/tree/master/ChaffinMethod which is way faster than mine.
+I will soon add a README inside the folder and add explecative comments.
+
+The current "state of the art" for the ChaffinMethod can be found here https://github.com/superpermutators/superperm/tree/master/ChaffinMethod
+
 
 >On `SupPerm_Checker-from-file.c` and the 11/04/2019 improvements
 
