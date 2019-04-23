@@ -126,10 +126,15 @@ void builddong(int * conn) {
 //this is the starting fillStr call
 void fillStr0(short int pos, short int pfound, int hashValue, int waste) {
 	max(max_perm, pfound, pos);
-	if ((waste == tot_bl || max_perm < stopit)) {
+	if (max_perm < stopit) {
 		int minihash = hashValue;
 		checker[minihash] = 1;
 		int pfound2 = pfound + 1;
+		int pos1 = pos + 1;
+		int pos2 = pos + 2;
+		int pos3 = pos + 3;
+		int pos4 = pos + 4;
+
 		for (int i = 0; i < N; i++) {
 			if (i != curstr[pos - 1]) {
 				curstr[pos] = i;
@@ -137,107 +142,107 @@ void fillStr0(short int pos, short int pfound, int hashValue, int waste) {
 				if (curstr[pos] == curstr[pos - N]) {
 					hashValue = connected1[minihash];
 					if (checker[hashValue] == 0) {
-						fillStr0(pos + 1, pfound2, hashValue, waste);
+						fillStr0(pos1, pfound2, hashValue, waste);
 					}
 				}
-				else if (curstr[pos] == curstr[pos - N + 1]) {
+				else if (curstr[pos] == curstr[pos1 - N]) {
 					tempwaste = waste - 1;
 					if (tempwaste >= 0 && (mperm_res[tempwaste] + pfound > max_perm && mperm_res[tempwaste] + pfound >= minim)) {
-						curstr[pos + 1] = curstr[pos - N];
+						curstr[pos1] = curstr[pos - N];
 						hashValue = connected2[minihash];
 						if (checker[hashValue] == 0) {
-							fillStr0(pos + 2, pfound2, hashValue, tempwaste);
+							fillStr0(pos2, pfound2, hashValue, tempwaste);
 						}
 					}
 				}
-				else if (curstr[pos] == curstr[pos - N + 2]) {
+				else if (curstr[pos] == curstr[pos2 - N]) {
 					tempwaste = waste - 2;
 					if (tempwaste >= 0 && (mperm_res[tempwaste] + pfound > max_perm && mperm_res[tempwaste] + pfound >= minim)) {
 						hashValue = connected3[minihash];
 						if (checker[hashValue] == 0) {
-							if (curstr[pos - N] < curstr[pos - N + 1]) {
-								curstr[pos + 1] = curstr[pos - N];
-								curstr[pos + 2] = curstr[pos - N + 1];
-								fillStr0(pos + 3, pfound2, hashValue, tempwaste);
+							if (curstr[pos - N] < curstr[pos1 - N]) {
+								curstr[pos1] = curstr[pos - N];
+								curstr[pos2] = curstr[pos1 - N];
+								fillStr0(pos3, pfound2, hashValue, tempwaste);
 							}
 							else {
-								curstr[pos + 1] = curstr[pos - N + 1];
-								curstr[pos + 2] = curstr[pos - N];
+								curstr[pos1] = curstr[pos1 - N];
+								curstr[pos2] = curstr[pos - N];
 								cur_perms[pfound] = hashValue;
-								fillStr0(pos + 3, pfound2, hashValue, tempwaste);
+								fillStr0(pos3, pfound2, hashValue, tempwaste);
 							}
 						}
 						hashValue++;
 						if (checker[hashValue] == 0) {
-							if (curstr[pos - N] > curstr[pos - N + 1]) {
-								curstr[pos + 1] = curstr[pos - N];
-								curstr[pos + 2] = curstr[pos - N + 1];
-								fillStr0(pos + 3, pfound2, hashValue, tempwaste);
+							if (curstr[pos - N] > curstr[pos1 - N]) {
+								curstr[pos1] = curstr[pos - N];
+								curstr[pos2] = curstr[pos1 - N];
+								fillStr0(pos3, pfound2, hashValue, tempwaste);
 							}
 							else {
-								curstr[pos + 1] = curstr[pos - N + 1];
-								curstr[pos + 2] = curstr[pos - N];
-								fillStr0(pos + 3, pfound2, hashValue, tempwaste);
+								curstr[pos1] = curstr[pos1 - N];
+								curstr[pos2] = curstr[pos - N];
+								fillStr0(pos3, pfound2, hashValue, tempwaste);
 							}
 						}
 					}
 				}
-				else if (curstr[pos] == curstr[pos - N + 3]) {
+				else if (curstr[pos] == curstr[pos3- N]) {
 					tempwaste = waste - 3;
 					if (tempwaste >= 0 && (mperm_res[tempwaste] + pfound  > max_perm && mperm_res[tempwaste] + pfound >= minim)) {
 						hashValue = connected4[minihash];
 						builddong(&curstr[pos - N]);
 						if (checker[hashValue] == 0) {
-							curstr[pos + 1] = dong[0];
-							curstr[pos + 2] = dong[1];
-							curstr[pos + 3] = dong[2];
+							curstr[pos1] = dong[0];
+							curstr[pos2] = dong[1];
+							curstr[pos3] = dong[2];
 							if (checker[hashValue] == 0) {
-								fillStr0(pos + 4, pfound2, hashValue, tempwaste);
+								fillStr0(pos4, pfound2, hashValue, tempwaste);
 							}
 						}
 						hashValue++;
 						if (checker[hashValue] == 0) {
-							curstr[pos + 1] = dong[0];
-							curstr[pos + 2] = dong[2];
-							curstr[pos + 3] = dong[1];
+							curstr[pos1] = dong[0];
+							curstr[pos2] = dong[2];
+							curstr[pos3] = dong[1];
 							if (checker[hashValue] == 0) {
-								fillStr0(pos + 4, pfound2, hashValue, tempwaste);
+								fillStr0(pos4, pfound2, hashValue, tempwaste);
 							}
 						}
 						hashValue++;
 						if (checker[hashValue] == 0) {
-							curstr[pos + 1] = dong[1];
-							curstr[pos + 2] = dong[0];
-							curstr[pos + 3] = dong[2];
+							curstr[pos1] = dong[1];
+							curstr[pos2] = dong[0];
+							curstr[pos3] = dong[2];
 							if (checker[hashValue] == 0) {
-								fillStr0(pos + 4, pfound2, hashValue, tempwaste);
+								fillStr0(pos4, pfound2, hashValue, tempwaste);
 							}
 						}
 						hashValue++;
 						if (checker[hashValue] == 0) {
-							curstr[pos + 1] = dong[1];
-							curstr[pos + 2] = dong[2];
-							curstr[pos + 3] = dong[0];
+							curstr[pos1] = dong[1];
+							curstr[pos2] = dong[2];
+							curstr[pos3] = dong[0];
 							if (checker[hashValue] == 0) {
-								fillStr0(pos + 4, pfound2, hashValue, tempwaste);
+								fillStr0(pos4, pfound2, hashValue, tempwaste);
 							}
 						}
 						hashValue++;
 						if (checker[hashValue] == 0) {
-							curstr[pos + 1] = dong[2];
-							curstr[pos + 2] = dong[0];
-							curstr[pos + 3] = dong[1];
+							curstr[pos1] = dong[2];
+							curstr[pos2] = dong[0];
+							curstr[pos3] = dong[1];
 							if (checker[hashValue] == 0) {
-								fillStr0(pos + 4, pfound2, hashValue, tempwaste);
+								fillStr0(pos4, pfound2, hashValue, tempwaste);
 							}
 						}
 						hashValue++;
 						if (checker[hashValue] == 0) {
-							curstr[pos + 1] = dong[2];
-							curstr[pos + 2] = dong[1];
-							curstr[pos + 3] = dong[0];
+							curstr[pos1] = dong[2];
+							curstr[pos2] = dong[1];
+							curstr[pos3] = dong[0];
 							if (checker[hashValue] == 0) {
-								fillStr0(pos + 4, pfound + 1, hashValue, tempwaste);
+								fillStr0(pos4, pfound2, hashValue, tempwaste);
 							}
 						}
 
