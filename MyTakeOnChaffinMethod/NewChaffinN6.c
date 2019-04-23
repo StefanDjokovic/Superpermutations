@@ -110,7 +110,7 @@ int main()
 	mperm_res[0] = N;
 
 	/*FILE* fp;
-	fp = fopen("C:\\Users\\Stefan Djokovic\\Desktop\\Superpermutations\\resultsCaffinN6.txt", "w");*/
+	fp = fopen("file source", "w");*/
 
 	//contains factorial values from 0! to N!
 	factval = (int*)malloc((N + 1) * sizeof(int));
