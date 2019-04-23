@@ -1,32 +1,31 @@
 //clearer and faster code
 
-//clearer and faster code
-
 #include <math.h>
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
 
-int curstr[1000], max_perm, mperm_res[1000], N, tot_bl;
-unsigned long int cur_perms[1000];
-int curmax[1000];
+short max_perm;
+short mperm_res[1000];
+short tot_bl;
+
+short N;
 
 bool* checker;
 int* factval;
-long int* upper;
+int* upper;
 int* power;
-int* connected1;
-int* connected2;
-int* connected3;
-int* connected4;
-int* connected5;
+short* connected1;
+short* connected2;
+short* connected3;
+short* connected4;
+short* connected5;
 bool* arr;
-unsigned long int tperm;
-int stopit;
-int stopitover;
-int dong[3];
-int dong2[4];
-int minim;
+short stopit;
+short stopitover;
+short dong[3];
+short dong2[4];
+short minim;
 
 
 int factorial(int k);
@@ -42,7 +41,7 @@ int getHashValue2(int* string) {
 }
 
 //this is the starting fillStr call
-void fillStr0(short int pos, short int pfound, int hashValue, int waste) {
+void fillStr0(short int pos, short int pfound, short int hashValue, short int waste) {
 	if (pfound > max_perm)
 		max_perm = pfound;
 	if (max_perm < stopit && max_perm < stopitover) {
@@ -121,13 +120,13 @@ int main()
 
 	stopit = factval[N];
 
-	upper = (long int*)calloc(pow(N, N + 1), sizeof(long int)); //a bit excessive, to improve
+	upper = (int*)calloc(pow(N, N + 1), sizeof(int)); //a bit excessive, to improve
 	power = (int*)malloc(sizeof(int) * (N * 2 + 1));
-	connected1 = (int*)malloc(sizeof(int) * factval[N]);
-	connected2 = (int*)malloc(sizeof(int) * factval[N]);
-	connected3 = (int*)malloc(sizeof(int) * factval[N]);
-	connected4 = (int*)malloc(sizeof(int) * factval[N]);
-	connected5 = (int*)malloc(sizeof(int) * factval[N]);
+	connected1 = (short*)malloc(sizeof(short) * factval[N]);
+	connected2 = (short*)malloc(sizeof(short) * factval[N]);
+	connected3 = (short*)malloc(sizeof(short) * factval[N]);
+	connected4 = (short*)malloc(sizeof(short) * factval[N]);
+	connected5 = (short*)malloc(sizeof(short) * factval[N]);
 
 	for (int i = 0; i < factorial(N); i++) {
 		connected1[i] = 0;
@@ -271,10 +270,10 @@ int main()
 			for (int j = k; j > 0 && dong2[j - 1] > dong2[j]; j--) {
 				kk = dong2[j];
 				dong2[j] = dong2[j - 1];
-				dong[j - 1] = kk;
+				dong2[j - 1] = kk;
 			}
 		for (int k = 0; k < 4; k++)
-			conn[k + 1 + N] = dong[k];
+			conn[k + 1 + N] = dong2[k];
 		connected5[i] = getHashValue2(&conn[5]);
 
 	}
@@ -288,12 +287,9 @@ int main()
 	for (tot_bl = 1; tot_bl <= 150; tot_bl++) {
 		max_perm = 1;
 
-		for (int i = 0; i < factval[N]; i++) ///THE NEW CLEARPERMS
+		for (int i = 1; i < factval[N]; i++) ///THE NEW CLEARPERMS
 			checker[i] = 0;
 
-		for (j0 = 0; j0 < N; j0++) {
-			curstr[j0] = j0;
-		}
 		checker[0] = 1;
 		minim = mperm_res[tot_bl - 1] + 4;
 		stopitover = mperm_res[tot_bl - 1] + 6;
