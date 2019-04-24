@@ -3,7 +3,7 @@
 Inspired by [Matt Parker's video](https://www.youtube.com/watch?v=OZzIvl1tbPo) I decided to give a go to the "shortest superpermutation problem".
 
 
-A superpermutation is a string that contains all the possible permutations of an initial string. Finding the smallest superpermutation is still an open problem for values larger than 5, and researchers are still looking both into finding them and Maths proofs. More infos can be found on the internet, in particular on [Numberphile's YT channel](https://www.youtube.com/user/numberphile), [Matt Parker's YT channel](https://www.youtube.com/user/standupmaths/videos) and this [Google group](https://groups.google.com/forum/#!forum/superpermutators)
+A superpermutation is a string that contains all the possible permutations of an initial string. Finding the smallest superpermutation is still an open problem for values larger than 5, and researchers are still looking both into finding them and Maths proofs. More infos and links can be found on [Numberphile's YT channel](https://www.youtube.com/user/numberphile), [Matt Parker's YT channel](https://www.youtube.com/user/standupmaths/videos) and this [Google group](https://groups.google.com/forum/#!forum/superpermutators)
 
 ___
 
@@ -45,7 +45,7 @@ A graphic explanation of the getHashValue function
 ![image](https://i.imgur.com/QQyH8UT.jpg)
 
 
->Older code comments
+**Older code comments**
 
 >On `SupPerm_Checker.c` && `SupPerm_Checker-from-file.c`
 
