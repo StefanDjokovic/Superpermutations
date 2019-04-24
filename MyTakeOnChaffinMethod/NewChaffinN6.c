@@ -1,5 +1,6 @@
 //Faster N = 6, it gets to 94 in about 30s.
 //Seems to be working well, but it still requires some improvements to be able to reach the final result
+//Also this version doesn't print the partial results, will add that soon
 
 #include <math.h>
 #include <stdio.h>
@@ -185,9 +186,6 @@ int main()
 	//scanf("%d", &N);
 
 	N = 6;
-
-	FILE * fp;
-	fp = fopen("C:\\Users\\Stefan Djokovic\\Desktop\\Superpermutations\\resultsCaffinN6.txt", "w");
 
 	mperm_res[0] = N;
 
