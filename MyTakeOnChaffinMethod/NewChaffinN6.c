@@ -1,13 +1,18 @@
-//clearer and faster code
+//Faster N = 6, it gets to 94 in about 30s.
+//Seems to be working well, but it still requires some improvements to be able to reach the final result
 
 #include <math.h>
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
+#include <stdbool.h>
 
 short max_perm;
 short mperm_res[1000];
 short tot_bl;
+
+short cur_perm[4000];	//to 4000 just to be safe
+short cur_best[4000];
 
 short N;
 
@@ -41,53 +46,126 @@ int getHashValue2(int* string) {
 }
 
 //this is the starting fillStr call
-void fillStr0(short int pos, short int pfound, short int hashValue, short int waste) {
-	if (pfound > max_perm)
+void fillStr0(short int pfound, short int hashValue, short int waste) {
+	if (pfound > max_perm) {
 		max_perm = pfound;
+	}
+
 	if (max_perm < stopit && max_perm < stopitover) {
 		int minihash = hashValue;
-		int tempwaste;
 		checker[minihash] = 1;
 		int pfound2 = pfound + 1;
-		int pos4 = pos + 4;
-		int pos5 = pos + 5;
-		int running;
 
 		//Making unwasted characters
-		hashValue = connected1[minihash];
-		if (checker[hashValue] == 0)
-			fillStr0(pos+1, pfound2, hashValue, waste);
-		tempwaste = waste - 1;
-		if (tempwaste >= 0 && mperm_res[tempwaste] + pfound > max_perm && mperm_res[tempwaste] + pfound >= minim) {
-			hashValue = connected2[minihash];
-			if (checker[hashValue] == 0)
-				fillStr0(pos+2, pfound2, hashValue, tempwaste);
-			tempwaste--;
-			if (tempwaste >= 0 && mperm_res[tempwaste] + pfound > max_perm && mperm_res[tempwaste] + pfound >= minim) {
+		if (checker[connected1[minihash]] == 0)
+			fillStr0(pfound2, connected1[minihash], waste);
+		waste--;
+		if (waste >= 0 && mperm_res[waste] + pfound > max_perm && mperm_res[waste] + pfound >= minim) {
+			if (checker[connected2[minihash]] == 0)
+				fillStr0(pfound2, connected2[minihash], waste);
+			waste--;
+			if (waste >= 0 && mperm_res[waste] + pfound > max_perm && mperm_res[waste] + pfound >= minim) {
 				hashValue = connected3[minihash];
 				if (checker[hashValue] == 0)
-					fillStr0(pos+3, pfound2, hashValue, tempwaste);
+					fillStr0(pfound2, hashValue, waste);
 				hashValue++;
 				if (checker[hashValue] == 0)
-					fillStr0(pos+3, pfound2, hashValue, tempwaste);
-				tempwaste--;
-				if (tempwaste >= 0 && mperm_res[tempwaste] + pfound > max_perm && mperm_res[tempwaste] + pfound >= minim) {
+					fillStr0(pfound2, hashValue, waste);
+				waste--;
+				if (waste >= 0 && mperm_res[waste] + pfound > max_perm && mperm_res[waste] + pfound >= minim) {
 					hashValue = connected4[minihash];
-					running = hashValue + 6;
-					while (hashValue < running) {
-						if (checker[hashValue] == 0)
-							fillStr0(pos4, pfound2, hashValue, tempwaste);
-						hashValue++;
-					}
-					tempwaste--;
-					if (tempwaste >= 0 && mperm_res[tempwaste] + pfound > max_perm && mperm_res[tempwaste] + pfound >= minim) {
+					if (checker[hashValue] == 0)
+						fillStr0(pfound2, hashValue, waste);
+					hashValue++;
+					if (checker[hashValue] == 0)
+						fillStr0(pfound2, hashValue, waste);
+					hashValue++;
+					if (checker[hashValue] == 0)
+						fillStr0(pfound2, hashValue, waste);
+					hashValue++;
+					if (checker[hashValue] == 0)
+						fillStr0(pfound2, hashValue, waste);
+					hashValue++;
+					if (checker[hashValue] == 0)
+						fillStr0(pfound2, hashValue, waste);
+					hashValue++;
+					if (checker[hashValue] == 0)
+						fillStr0(pfound2, hashValue, waste);
+
+					waste--;
+					if (waste >= 0 && mperm_res[waste] + pfound > max_perm && mperm_res[waste] + pfound >= minim) {
 						hashValue = connected5[minihash];
-						running = hashValue + 24;
-						while (hashValue < running) {
-							if (checker[hashValue] == 0)
-								fillStr0(pos5, pfound2, hashValue, tempwaste);
-							hashValue++;
-						}
+						if (checker[hashValue] == 0)
+							fillStr0(pfound2, hashValue, waste);
+						hashValue++;
+						if (checker[hashValue] == 0)
+							fillStr0(pfound2, hashValue, waste);
+						hashValue++;
+						if (checker[hashValue] == 0)
+							fillStr0(pfound2, hashValue, waste);
+						hashValue++;
+						if (checker[hashValue] == 0)
+							fillStr0(pfound2, hashValue, waste);
+						hashValue++;
+						if (checker[hashValue] == 0)
+							fillStr0(pfound2, hashValue, waste);
+						hashValue++;
+						if (checker[hashValue] == 0)
+							fillStr0(pfound2, hashValue, waste);
+						hashValue++;
+						if (checker[hashValue] == 0)
+							fillStr0(pfound2, hashValue, waste);
+						hashValue++;
+						if (checker[hashValue] == 0)
+							fillStr0(pfound2, hashValue, waste);
+						hashValue++;
+						if (checker[hashValue] == 0)
+							fillStr0(pfound2, hashValue, waste);
+						hashValue++;
+						if (checker[hashValue] == 0)
+							fillStr0(pfound2, hashValue, waste);
+						hashValue++;
+						if (checker[hashValue] == 0)
+							fillStr0(pfound2, hashValue, waste);
+						hashValue++;
+						if (checker[hashValue] == 0)
+							fillStr0(pfound2, hashValue, waste);
+						hashValue++;
+						if (checker[hashValue] == 0)
+							fillStr0(pfound2, hashValue, waste);
+						hashValue++;
+						if (checker[hashValue] == 0)
+							fillStr0(pfound2, hashValue, waste);
+						hashValue++;
+						if (checker[hashValue] == 0)
+							fillStr0(pfound2, hashValue, waste);
+						hashValue++;
+						if (checker[hashValue] == 0)
+							fillStr0(pfound2, hashValue, waste);
+						hashValue++;
+						if (checker[hashValue] == 0)
+							fillStr0(pfound2, hashValue, waste);
+						hashValue++;
+						if (checker[hashValue] == 0)
+							fillStr0(pfound2, hashValue, waste);
+						hashValue++;
+						if (checker[hashValue] == 0)
+							fillStr0(pfound2, hashValue, waste);
+						hashValue++;
+						if (checker[hashValue] == 0)
+							fillStr0(pfound2, hashValue, waste);
+						hashValue++;
+						if (checker[hashValue] == 0)
+							fillStr0(pfound2, hashValue, waste);
+						hashValue++;
+						if (checker[hashValue] == 0)
+							fillStr0(pfound2, hashValue, waste);
+						hashValue++;
+						if (checker[hashValue] == 0)
+							fillStr0(pfound2, hashValue, waste);
+						hashValue++;
+						if (checker[hashValue] == 0)
+							fillStr0(pfound2, hashValue, waste);
 					}
 				}
 			}
@@ -95,8 +173,9 @@ void fillStr0(short int pos, short int pfound, short int hashValue, short int wa
 		}
 		checker[minihash] = 0;
 	}
-
 }
+
+
 
 int main()
 {
@@ -107,10 +186,10 @@ int main()
 
 	N = 6;
 
-	mperm_res[0] = N;
+	FILE * fp;
+	fp = fopen("C:\\Users\\Stefan Djokovic\\Desktop\\Superpermutations\\resultsCaffinN6.txt", "w");
 
-	/*FILE* fp;
-	fp = fopen("file source", "w");*/
+	mperm_res[0] = N;
 
 	//contains factorial values from 0! to N!
 	factval = (int*)malloc((N + 1) * sizeof(int));
@@ -277,31 +356,45 @@ int main()
 		connected5[i] = getHashValue2(&conn[5]);
 
 	}
-
 	checker = (bool*)malloc(sizeof(bool) * factval[N]);
-	///END OF GENERATING CONNECTIONS ETC
 
 
 	printf("Thanks for choosing N: %d, let's start!\n", N);
 
+	max_perm = 1;
+	mperm_res[0] = N;
+	mperm_res[1] = 12;
+
 	for (tot_bl = 1; tot_bl <= 150; tot_bl++) {
-		max_perm = 1;
+		//max_perm = 1; I can keep the previous max_perm to speed things up
 
-		for (int i = 1; i < factval[N]; i++) ///THE NEW CLEARPERMS
-			checker[i] = 0;
 
-		checker[0] = 1;
 		minim = mperm_res[tot_bl - 1] + 4;
 		stopitover = mperm_res[tot_bl - 1] + 6;
-		fillStr0(N, 1, 0, tot_bl);
+		for (int i = 0; i < factval[N]; i++) {
+			checker[i] = 0;
+		}
+
+		checker[0] = 1;
+
+		fillStr0(1, 0, tot_bl);
 		mperm_res[tot_bl] = max_perm;
+		mperm_res[tot_bl + 1] = max_perm + 4;	//conjecture that the current will be at least +4 in N=6 compared the previous
+
 
 		printf("%d wasted characters: at most %d permutations\n", tot_bl, max_perm);
+
+		for (int i = 0;i < 1000; i++) {
+			fprintf(fp, "%d ",cur_best[i]);
+		}
+		fprintf(fp, "\n");
 
 		if (max_perm >= factval[N]) {
 			printf("\n-----\nDONE!\n-----\n\nMinimal superpermutations on %d symbols have %d wasted characters and a length of %d.\n", N, tot_bl, max_perm);
 			break;
 		}
+
+
 	}
 
 	getchar();
