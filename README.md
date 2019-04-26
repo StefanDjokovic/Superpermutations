@@ -13,11 +13,12 @@ ___
 
 Ben Chaffin was the first to show with code that the minimum length of a superpermutation of N = 5 is 153. To prove it he designed the code available here http://www.njohnston.ca/2014/08/all-minimal-superpermutations-on-five-symbols-have-been-found/
 
-Based on the idea of "wasted characters" and the indexing of permutations I designed my own solution. My code takes, as of the 23/04 updates, 0.2s to complete with N = 5 and it takes roughly 8 minutes to get to w = 101. To actually solve the problem it will still take some work, but I'm confident that it's possible to arrive to the solution through some optimization.
+Based on the idea of "wasted characters" and the indexing of permutations I designed my own solution. My code takes, as of the 23/04 updates, 0.2s to complete with N = 5. However N = 6 is way harder to prove, and it requires way more time. The NewChaffinN6.c version is still not good enough to get to the required value, but the speed at which it runs is still pretty impressive.  
 
 I will soon add a README inside the folder and add explecative comments.
 
-The current "state of the art" for the ChaffinMethod can be found here https://github.com/superpermutators/superperm/tree/master/ChaffinMethod
+Another version of the code run by a Greg Egan can be found here
+https://github.com/superpermutators/superperm/tree/master/ChaffinMethod
 
 
 >On `SupPerm_Checker-from-file.c` and the 11/04/2019 improvements
