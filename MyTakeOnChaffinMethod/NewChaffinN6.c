@@ -1,4 +1,9 @@
-//Faster N = 6, it gets to 94 in about 30s.
+//This code uses the following assumptions to run as fast as possible (Still not speedy enough to reach the final result in a valuable time):
+//1) In the shortest superpermutation a permutation appears only once; it's considered to be true, but there is no
+//proof yet
+//2) The maximum number of new permutation after adding a new wasted character will be equals or less than 6. The discussion
+//is still going on, but it's thought to be true.
+
 //Seems to be working well, but it still requires some improvements to be able to reach the final result
 //Also this version doesn't print the partial results, will add that soon
 
@@ -8,224 +13,88 @@
 #include <stdlib.h>
 #include <stdbool.h>
 
-short max_perm;
-short mperm_res[1000];
-short tot_bl;
+short max_perm;			//keeps the maximum permutation value
+short mperm_res[1000];	//keeps all the maximum permutation values for each wasted character
+short tot_bl;			//wasted character
 
-short cur_perm[4000];	//to 4000 just to be safe
-short cur_best[4000];
+short N;				//N = 6 in this version, it's the number of different characters
 
-short N;
-
-bool* checker;
-int* factval;
-int* upper;
-int* power;
-short* connected1;
-short* connected2;
-short* connected3;
-short* connected4;
-short* connected5;
+bool* checker;			//this array is used to keep the permutation used 
+int* factval;			//array with the useful factorials			
+int* power;				//array with the useful powers of N
+//used to build the indexing of the arrays
 bool* arr;
-short stopit;
-short stopitover;
+int* upper;
 short dong[3];
 short dong2[4];
-short minim;
+//given the index, the connected structure gives the lowest index of the permutation connected with it 
+short* connected0;		//0 wasted characters
+short* connected1;		//1 wasted characters
+short* connected2;		//2 wasted characters
+short* connected3;		//3 wasted characters
+short* connected4;		//4 wasted characters
+short stopit;			//factval[N], the number of possible permutations at which the result is found
+short stopitover;		//it's +N, the maximum number of characters generated with +1 wasted characters
+int gotit;				//signals if a permutation of higher max_val was found
 
-
+//function that returns the factorial of the input value
 int factorial(int k);
 
-int getHashValue2(int* string) {
-	long int val = 0;
-	for (int i = 0; i < N; i++) {
-		val = val * N + string[i];
-	}
-	val = upper[val];
+//function that gives the index of the input permutation
+int getIndex(int* string);
 
-	return val;
-}
+//function that fills the strings in and checks their values
+void fillStr0(short int pfound, short int permIndex, short int towaste);
 
-//this is the starting fillStr call
-void fillStr0(short int pfound, short int hashValue, short int waste) {
-	if (pfound > max_perm) {
-		max_perm = pfound;
-	}
-
-	if (max_perm < stopit && max_perm < stopitover) {
-		int minihash = hashValue;
-		checker[minihash] = 1;
-		int pfound2 = pfound + 1;
-
-		//Making unwasted characters
-		if (checker[connected1[minihash]] == 0)
-			fillStr0(pfound2, connected1[minihash], waste);
-		waste--;
-		if (waste >= 0 && mperm_res[waste] + pfound > max_perm && mperm_res[waste] + pfound >= minim) {
-			if (checker[connected2[minihash]] == 0)
-				fillStr0(pfound2, connected2[minihash], waste);
-			waste--;
-			if (waste >= 0 && mperm_res[waste] + pfound > max_perm && mperm_res[waste] + pfound >= minim) {
-				hashValue = connected3[minihash];
-				if (checker[hashValue] == 0)
-					fillStr0(pfound2, hashValue, waste);
-				hashValue++;
-				if (checker[hashValue] == 0)
-					fillStr0(pfound2, hashValue, waste);
-				waste--;
-				if (waste >= 0 && mperm_res[waste] + pfound > max_perm && mperm_res[waste] + pfound >= minim) {
-					hashValue = connected4[minihash];
-					if (checker[hashValue] == 0)
-						fillStr0(pfound2, hashValue, waste);
-					hashValue++;
-					if (checker[hashValue] == 0)
-						fillStr0(pfound2, hashValue, waste);
-					hashValue++;
-					if (checker[hashValue] == 0)
-						fillStr0(pfound2, hashValue, waste);
-					hashValue++;
-					if (checker[hashValue] == 0)
-						fillStr0(pfound2, hashValue, waste);
-					hashValue++;
-					if (checker[hashValue] == 0)
-						fillStr0(pfound2, hashValue, waste);
-					hashValue++;
-					if (checker[hashValue] == 0)
-						fillStr0(pfound2, hashValue, waste);
-
-					waste--;
-					if (waste >= 0 && mperm_res[waste] + pfound > max_perm && mperm_res[waste] + pfound >= minim) {
-						hashValue = connected5[minihash];
-						if (checker[hashValue] == 0)
-							fillStr0(pfound2, hashValue, waste);
-						hashValue++;
-						if (checker[hashValue] == 0)
-							fillStr0(pfound2, hashValue, waste);
-						hashValue++;
-						if (checker[hashValue] == 0)
-							fillStr0(pfound2, hashValue, waste);
-						hashValue++;
-						if (checker[hashValue] == 0)
-							fillStr0(pfound2, hashValue, waste);
-						hashValue++;
-						if (checker[hashValue] == 0)
-							fillStr0(pfound2, hashValue, waste);
-						hashValue++;
-						if (checker[hashValue] == 0)
-							fillStr0(pfound2, hashValue, waste);
-						hashValue++;
-						if (checker[hashValue] == 0)
-							fillStr0(pfound2, hashValue, waste);
-						hashValue++;
-						if (checker[hashValue] == 0)
-							fillStr0(pfound2, hashValue, waste);
-						hashValue++;
-						if (checker[hashValue] == 0)
-							fillStr0(pfound2, hashValue, waste);
-						hashValue++;
-						if (checker[hashValue] == 0)
-							fillStr0(pfound2, hashValue, waste);
-						hashValue++;
-						if (checker[hashValue] == 0)
-							fillStr0(pfound2, hashValue, waste);
-						hashValue++;
-						if (checker[hashValue] == 0)
-							fillStr0(pfound2, hashValue, waste);
-						hashValue++;
-						if (checker[hashValue] == 0)
-							fillStr0(pfound2, hashValue, waste);
-						hashValue++;
-						if (checker[hashValue] == 0)
-							fillStr0(pfound2, hashValue, waste);
-						hashValue++;
-						if (checker[hashValue] == 0)
-							fillStr0(pfound2, hashValue, waste);
-						hashValue++;
-						if (checker[hashValue] == 0)
-							fillStr0(pfound2, hashValue, waste);
-						hashValue++;
-						if (checker[hashValue] == 0)
-							fillStr0(pfound2, hashValue, waste);
-						hashValue++;
-						if (checker[hashValue] == 0)
-							fillStr0(pfound2, hashValue, waste);
-						hashValue++;
-						if (checker[hashValue] == 0)
-							fillStr0(pfound2, hashValue, waste);
-						hashValue++;
-						if (checker[hashValue] == 0)
-							fillStr0(pfound2, hashValue, waste);
-						hashValue++;
-						if (checker[hashValue] == 0)
-							fillStr0(pfound2, hashValue, waste);
-						hashValue++;
-						if (checker[hashValue] == 0)
-							fillStr0(pfound2, hashValue, waste);
-						hashValue++;
-						if (checker[hashValue] == 0)
-							fillStr0(pfound2, hashValue, waste);
-						hashValue++;
-						if (checker[hashValue] == 0)
-							fillStr0(pfound2, hashValue, waste);
-					}
-				}
-			}
-
-		}
-		checker[minihash] = 0;
-	}
-}
-
-
-
-int main()
-{
-	unsigned short int j0;
-
-	printf("This tool will try to find the length of the shortest superpermutation on n symbols. Please enter n: 6");
-	//scanf("%d", &N);
+//main body
+int main() {
 
 	N = 6;
+	char enter;
 
-	mperm_res[0] = N;
+	printf("This tool will try to find the length of the shortest superpermutation of 6 symbols. Press enter to continue: ");
+	scanf("%c", &enter);
 
-	//contains factorial values from 0! to N!
+	//initializes factval
 	factval = (int*)malloc((N + 1) * sizeof(int));
 	for (int i = 0; i <= N; i++) {
 		factval[i] = factorial(i);
 	}
 
-	stopit = factval[N];
-
+	//allocating in memory the arrays needed
 	upper = (int*)calloc(pow(N, N + 1), sizeof(int)); //a bit excessive, to improve
 	power = (int*)malloc(sizeof(int) * (N * 2 + 1));
+	connected0 = (short*)malloc(sizeof(short) * factval[N]);
 	connected1 = (short*)malloc(sizeof(short) * factval[N]);
 	connected2 = (short*)malloc(sizeof(short) * factval[N]);
 	connected3 = (short*)malloc(sizeof(short) * factval[N]);
 	connected4 = (short*)malloc(sizeof(short) * factval[N]);
-	connected5 = (short*)malloc(sizeof(short) * factval[N]);
 
+	checker = (bool*)malloc(sizeof(bool) * factval[N]);
+
+	//zeroing, just a safety measure, could have used calloc insted
 	for (int i = 0; i < factorial(N); i++) {
+		connected0[i] = 0;
 		connected1[i] = 0;
 		connected2[i] = 0;
 		connected3[i] = 0;
 		connected4[i] = 0;
 	}
 
-	//contains power values of 6 from 0 to N*2
+	//initializing power
 	for (int i = 0; i <= N * 2; i++) {
 		power[i] = pow(N, i);
 	}
-
+	//initializing arr
 	arr = (bool*)malloc(N * sizeof(bool));
 	for (int s = 0; s < N; s++)
 		arr[s] = 0;
-
+	//some variables required to make the indexing work, check README on how this works
 	int a;
 	int step;
 	int k;
 
-	//connecting first order connections to hash values
+	//generating indexing
 	for (int i = 0; i < factorial(N); i++) {
 		long int upperValue = 0;
 		for (int s = 0; s < N; s++)
@@ -257,7 +126,7 @@ int main()
 
 	}
 
-	//generationg connected1 and connected2
+	//generationg all connected arrays, how it works (Soon) in readme
 	int* conn = (int*)malloc(sizeof(int) * (N + 2));
 	for (int i = 0; i < factval[N]; i++) {
 		for (int s = 0; s < N; s++)
@@ -284,10 +153,10 @@ int main()
 			arr[k] = 1;
 			conn[j] = k;
 		}
-		connected1[i] = getHashValue2(&conn[1]);
+		connected0[i] = getIndex(&conn[1]);
 		conn[N] = conn[1];
 		conn[N + 1] = conn[0];
-		connected2[i] = getHashValue2(&conn[2]);
+		connected1[i] = getIndex(&conn[2]);
 		conn[N] = conn[2];
 		if (conn[0] < conn[1]) {
 			conn[N + 1] = conn[0];
@@ -297,7 +166,7 @@ int main()
 			conn[N + 1] = conn[1];
 			conn[N + 2] = conn[0];
 		}
-		connected3[i] = getHashValue2(&conn[3]);
+		connected2[i] = getIndex(&conn[3]);
 
 		conn[N] = conn[3];
 		if (conn[0] < conn[1]) {
@@ -337,7 +206,7 @@ int main()
 				conn[N + 3] = conn[0];
 			}
 		}
-		connected4[i] = getHashValue2(&conn[4]);
+		connected3[i] = getIndex(&conn[4]);
 
 		conn[N] = conn[4];
 		for (int k = 0; k < 4; k++)
@@ -351,24 +220,20 @@ int main()
 			}
 		for (int k = 0; k < 4; k++)
 			conn[k + 1 + N] = dong2[k];
-		connected5[i] = getHashValue2(&conn[5]);
+		connected4[i] = getIndex(&conn[5]);
 
 	}
-	checker = (bool*)malloc(sizeof(bool) * factval[N]);
-
-
-	printf("Thanks for choosing N: %d, let's start!\n", N);
-
-	max_perm = 1;
+	
+	stopit = factval[N];
+	
+	//Starting values
 	mperm_res[0] = N;
-	mperm_res[1] = 12;
-
-	for (tot_bl = 1; tot_bl <= 150; tot_bl++) {
-		//max_perm = 1; I can keep the previous max_perm to speed things up
+	max_perm = N;
 
 
-		minim = mperm_res[tot_bl - 1] + 4;
-		stopitover = mperm_res[tot_bl - 1] + 6;
+	for (tot_bl = 1; tot_bl <= 250; tot_bl++) {
+		gotit = 0;
+		stopitover = mperm_res[tot_bl - 1] + N;
 		for (int i = 0; i < factval[N]; i++) {
 			checker[i] = 0;
 		}
@@ -376,16 +241,38 @@ int main()
 		checker[0] = 1;
 
 		fillStr0(1, 0, tot_bl);
-		mperm_res[tot_bl] = max_perm;
-		mperm_res[tot_bl + 1] = max_perm + 4;	//conjecture that the current will be at least +4 in N=6 compared the previous
+		//if fillStr didn't find a new permutation, or it's not the end try with a lower number of max_perm
+		if (gotit == 0 && max_perm != factval[N]) {
+			max_perm--;
+			for (int i = 0; i < factval[N]; i++) {
+				checker[i] = 0;
+			}
+			checker[0] = 1;
+			fillStr0(1, 0, tot_bl);
 
+			if (gotit == 0 && max_perm != factval[N]) {
+				max_perm--;
+				for (int i = 0; i < factval[N]; i++) {
+					checker[i] = 0;
+				}
+				checker[0] = 1;
+				fillStr0(1, 0, tot_bl);
+
+				if (gotit == 0 && max_perm != factval[N]) {
+					max_perm--;
+					for (int i = 0; i < factval[N]; i++) {
+						checker[i] = 0;
+					}
+					checker[0] = 1;
+					fillStr0(1, 0, tot_bl);
+				}
+			}
+		}
+		mperm_res[tot_bl] = max_perm;
 
 		printf("%d wasted characters: at most %d permutations\n", tot_bl, max_perm);
 
-		for (int i = 0;i < 1000; i++) {
-			fprintf(fp, "%d ",cur_best[i]);
-		}
-		fprintf(fp, "\n");
+		max_perm = max_perm + 4;	//to speed things up the hypotesis is that the new perm will be higher than the current+4
 
 		if (max_perm >= factval[N]) {
 			printf("\n-----\nDONE!\n-----\n\nMinimal superpermutations on %d symbols have %d wasted characters and a length of %d.\n", N, tot_bl, max_perm);
@@ -397,6 +284,148 @@ int main()
 
 	getchar();
 	return 0;
+}
+
+
+void fillStr0(short int pfound, short int permIndex, short int towaste) {
+	if (pfound > max_perm) {
+		max_perm = pfound;
+		gotit = 1;
+	}
+
+	if (max_perm < stopit && max_perm < stopitover) {
+		int tempIndex = permIndex;
+		checker[tempIndex] = 1;
+		int pfound2 = pfound + 1;
+
+		//Making unwasted characters
+		if (checker[connected0[tempIndex]] == 0)
+			fillStr0(pfound2, connected0[tempIndex], towaste);
+		towaste--;
+		if (towaste >= 0 && mperm_res[towaste] + pfound > max_perm) {
+			if (checker[connected1[tempIndex]] == 0)
+				fillStr0(pfound2, connected1[tempIndex], towaste);
+			towaste--;
+			if (towaste >= 0 && mperm_res[towaste] + pfound > max_perm) {
+				permIndex = connected2[tempIndex];
+				if (checker[permIndex] == 0)
+					fillStr0(pfound2, permIndex, towaste);
+				permIndex++;
+				if (checker[permIndex] == 0)
+					fillStr0(pfound2, permIndex, towaste);
+				towaste--;
+				if (towaste >= 0 && mperm_res[towaste] + pfound > max_perm) {
+					permIndex = connected3[tempIndex];
+					if (checker[permIndex] == 0)
+						fillStr0(pfound2, permIndex, towaste);
+					permIndex++;
+					if (checker[permIndex] == 0)
+						fillStr0(pfound2, permIndex, towaste);
+					permIndex++;
+					if (checker[permIndex] == 0)
+						fillStr0(pfound2, permIndex, towaste);
+					permIndex++;
+					if (checker[permIndex] == 0)
+						fillStr0(pfound2, permIndex, towaste);
+					permIndex++;
+					if (checker[permIndex] == 0)
+						fillStr0(pfound2, permIndex, towaste);
+					permIndex++;
+					if (checker[permIndex] == 0)
+						fillStr0(pfound2, permIndex, towaste);
+
+					towaste--;
+					if (towaste >= 0 && mperm_res[towaste] + pfound > max_perm) {
+						permIndex = connected4[tempIndex];
+						if (checker[permIndex] == 0)
+							fillStr0(pfound2, permIndex, towaste);
+						permIndex++;
+						if (checker[permIndex] == 0)
+							fillStr0(pfound2, permIndex, towaste);
+						permIndex++;
+						if (checker[permIndex] == 0)
+							fillStr0(pfound2, permIndex, towaste);
+						permIndex++;
+						if (checker[permIndex] == 0)
+							fillStr0(pfound2, permIndex, towaste);
+						permIndex++;
+						if (checker[permIndex] == 0)
+							fillStr0(pfound2, permIndex, towaste);
+						permIndex++;
+						if (checker[permIndex] == 0)
+							fillStr0(pfound2, permIndex, towaste);
+						permIndex++;
+						if (checker[permIndex] == 0)
+							fillStr0(pfound2, permIndex, towaste);
+						permIndex++;
+						if (checker[permIndex] == 0)
+							fillStr0(pfound2, permIndex, towaste);
+						permIndex++;
+						if (checker[permIndex] == 0)
+							fillStr0(pfound2, permIndex, towaste);
+						permIndex++;
+						if (checker[permIndex] == 0)
+							fillStr0(pfound2, permIndex, towaste);
+						permIndex++;
+						if (checker[permIndex] == 0)
+							fillStr0(pfound2, permIndex, towaste);
+						permIndex++;
+						if (checker[permIndex] == 0)
+							fillStr0(pfound2, permIndex, towaste);
+						permIndex++;
+						if (checker[permIndex] == 0)
+							fillStr0(pfound2, permIndex, towaste);
+						permIndex++;
+						if (checker[permIndex] == 0)
+							fillStr0(pfound2, permIndex, towaste);
+						permIndex++;
+						if (checker[permIndex] == 0)
+							fillStr0(pfound2, permIndex, towaste);
+						permIndex++;
+						if (checker[permIndex] == 0)
+							fillStr0(pfound2, permIndex, towaste);
+						permIndex++;
+						if (checker[permIndex] == 0)
+							fillStr0(pfound2, permIndex, towaste);
+						permIndex++;
+						if (checker[permIndex] == 0)
+							fillStr0(pfound2, permIndex, towaste);
+						permIndex++;
+						if (checker[permIndex] == 0)
+							fillStr0(pfound2, permIndex, towaste);
+						permIndex++;
+						if (checker[permIndex] == 0)
+							fillStr0(pfound2, permIndex, towaste);
+						permIndex++;
+						if (checker[permIndex] == 0)
+							fillStr0(pfound2, permIndex, towaste);
+						permIndex++;
+						if (checker[permIndex] == 0)
+							fillStr0(pfound2, permIndex, towaste);
+						permIndex++;
+						if (checker[permIndex] == 0)
+							fillStr0(pfound2, permIndex, towaste);
+						permIndex++;
+						if (checker[permIndex] == 0)
+							fillStr0(pfound2, permIndex, towaste);
+					}
+				}
+			}
+
+		}
+		checker[tempIndex] = 0;
+	}
+}
+
+//function that gives the index of the input permutation
+int getIndex(int* string) {
+	long int val = 0;
+	for (int i = 0; i < N; i++) {
+		val = val * N + string[i];
+	}
+	val = upper[val];
+
+	return val;
 }
 
 // this function computes the factorial of a number
