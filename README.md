@@ -23,7 +23,7 @@ https://github.com/superpermutators/superperm/tree/master/ChaffinMethod
 
 >On `SupPerm_Checker-from-file.c` 
 
-`SupPerm_Checker-from-file.c` was made as an easy-to-use and fast superpermutation checker.
+`SupPerm_Checker-from-file.c` is designed as an easy-to-use and fast superpermutation checker.
 
 It takes the file directory from standard input, the value of N, and prints out if the permutations found are valid superpermutations. The source file should contain one superpermutation per line, and the code can also ignore # comment lines. The superpermutations should be made of numbers starting from 1 (easily interchangeble to letters, read comments in code). There is no error-handling for wrong N input, so please be sure to insert the right one.
 
