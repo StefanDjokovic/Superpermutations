@@ -9,7 +9,7 @@ ___
 
 **My work:**
 
->MyTakeOnChaffinMethod folder
+> `MyTakeOnChaffinMethod` folder
 
 Ben Chaffin was the first to show with code that the minimum length of a superpermutation of N = 5 is 153. To prove it he designed the code available here http://www.njohnston.ca/2014/08/all-minimal-superpermutations-on-five-symbols-have-been-found/
 
