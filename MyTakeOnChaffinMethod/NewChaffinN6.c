@@ -127,7 +127,7 @@ int main() {
 	}
 
 	//generationg all connected arrays, how it works (Soon) in readme
-	int* conn = (int*)malloc(sizeof(int) * (N + 2));
+	int* conn = (int*)malloc(sizeof(int) * (N + N));
 	for (int i = 0; i < factval[N]; i++) {
 		for (int s = 0; s < N; s++)
 			arr[s] = 0;
