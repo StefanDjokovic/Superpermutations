@@ -15,3 +15,10 @@ The permutations of 0 and 1 wasted characters are unique (e.g. 012345 with w = 0
 To speed things even further, first it is checked if there are any connected0 values that have not been checked. If so, it keeps going. If now, it's checked if there is a connected1 available. If there is places it and goes back to check connected0, if not it checks connected2, and so on. If by placing a new permutation from connected1 or more the number of wasted characters goes through the limit, it kills the goes back.
 
 This are the basic structure and ideas that were used in newChaffinN6.c
+
+**Some notes on the speed-up strategies used**
+There are 3 main strategies used to kill the inefficient (and probably wrong) branches:
+
+1. By adding one wasted character the maximum number of permutations that can be added are 6
+2. The program first check if, after adding a new wasted character, there are at least 5 new permutation. If it doesn't happen, it goes to 4, than 3 etc.
+3. checker == 0 actually doesn't elimitate the presence of multiple permutations in the complete superpermutation. One explecative example: given 12345612345 checker==0 will avoid the placement of the digit 6 at the end (in fact 123456 was already present at the beginning) but a 6 may appear with 3 wasted characters when 456132 is added. In fact the string 123456123456132 will be checked, making sure that all the possible valuable string are checked.
