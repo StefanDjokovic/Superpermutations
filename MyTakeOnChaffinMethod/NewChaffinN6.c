@@ -32,6 +32,11 @@ short stopit;			//factval[N], the number of possible permutations at which the r
 short stopitover;		//it's +N, the maximum number of characters generated with +1 wasted characters
 int gotit;				//signals if a permutation of higher max_val was found
 
+FILE * fp;
+
+short curr_perm[2000];
+short best_perm[2000];
+
 //function that returns the factorial of the input value
 int factorial(int k);
 
@@ -46,6 +51,17 @@ int main() {
 
 	N = 6;
 	char enter;
+
+	char filepos[300];
+	printf("Please, specify file directory where max_perm will be place (example: C:\\Users\\...:\n");
+	scanf("%149[^\n]%*c", filepos);
+	
+	fp = fopen(filepos, "w");
+	if (fp == NULL) {
+		printf("Error with opening the file\n");
+		return -1;
+	}
+
 
 	printf("This tool will try to find the length of the shortest superpermutation of 6 symbols. Press enter to continue: ");
 	scanf("%c", &enter);
@@ -121,7 +137,7 @@ int main() {
 
 	}
 
-	//generationg all connected arrays, how it works (Soon) in readme
+	//generationg all connected arrays
 	int* conn = (int*)malloc(sizeof(int) * (N + N));
 	for (int i = 0; i < factval[N]; i++) {
 		for (int s = 0; s < N; s++)
@@ -163,50 +179,25 @@ int main() {
 		}
 		connected2[i] = getIndex(&conn[3]);
 
+		//building connected3
 		conn[N] = conn[3];
-		if (conn[0] < conn[1]) {
-			if (conn[0] < conn[2]) {
-				conn[N + 1] = conn[0];
-				if (conn[1] < conn[2]) {
-					conn[N + 2] = conn[1];
-					conn[N + 3] = conn[2];
-				}
-				else {
-					conn[N + 2] = conn[2];
-					conn[N + 3] = conn[1];
-				}
-
+		for (int k = 0; k < 3; k++)
+			dong2[k] = conn[k];
+		int kk;
+		for (int k = 1; k < 3; k++)
+			for (int j = k; j > 0 && dong2[j - 1] > dong2[j]; j--) {
+				kk = dong2[j];
+				dong2[j] = dong2[j - 1];
+				dong2[j - 1] = kk;
 			}
-			else {
-				conn[N + 1] = conn[2];
-				conn[N + 2] = conn[0];
-				conn[N + 3] = conn[1];
-			}
-		}
-		else {
-			if (conn[1] < conn[2]) {
-				conn[N + 1] = conn[1];
-				if (conn[0] < conn[2]) {
-					conn[N + 2] = conn[0];
-					conn[N + 3] = conn[2];
-				}
-				else {
-					conn[N + 2] = conn[2];
-					conn[N + 3] = conn[0];
-				}
-			}
-			else {
-				conn[N + 1] = conn[2];
-				conn[N + 2] = conn[1];
-				conn[N + 3] = conn[0];
-			}
-		}
+		for (int k = 0; k < 3; k++)
+			conn[k + 1 + N] = dong2[k];
 		connected3[i] = getIndex(&conn[4]);
 
+		//building connected4
 		conn[N] = conn[4];
 		for (int k = 0; k < 4; k++)
 			dong2[k] = conn[k];
-		int kk;
 		for (int k = 1; k < 4; k++)
 			for (int j = k; j > 0 && dong2[j - 1] > dong2[j]; j--) {
 				kk = dong2[j];
@@ -218,9 +209,9 @@ int main() {
 		connected4[i] = getIndex(&conn[5]);
 
 	}
-	
+
 	stopit = factval[N];
-	
+
 	//Starting values
 	mperm_res[0] = N;
 	max_perm = N;
@@ -267,6 +258,11 @@ int main() {
 
 		printf("%d wasted characters: at most %d permutations\n", tot_bl, max_perm);
 
+		fprintf(fp, "%d %d\n", tot_bl, max_perm);
+		for (int k = 0; k < max_perm; k++)
+			fprintf(fp, "%d ", best_perm[k]);
+		fprintf(fp, "\n");
+
 		max_perm = max_perm + 4;	//to speed things up the hypotesis is that the new perm will be higher than the current+4
 
 		if (max_perm >= factval[N]) {
@@ -282,10 +278,14 @@ int main() {
 }
 
 
+//function that fills the strings in and checks their values
 void fillStr0(short int pfound, short int permIndex, short int towaste) {
+	curr_perm[pfound - 1] = permIndex;
 	if (pfound > max_perm) {
 		max_perm = pfound;
 		gotit = 1;
+		for (int i = 0; i < max_perm; i++)
+			best_perm[i] = curr_perm[i];
 	}
 
 	if (max_perm < stopit && max_perm < stopitover) {
