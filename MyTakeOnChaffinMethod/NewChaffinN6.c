@@ -311,98 +311,20 @@ void fillStr0(short int pfound, short int permIndex, short int towaste) {
 				towaste--;
 				if (towaste >= 0 && mperm_res[towaste] + pfound > max_perm) {
 					permIndex = connected3[tempIndex];
-					if (checker[permIndex] == 0)
-						fillStr0(pfound2, permIndex, towaste);
-					permIndex++;
-					if (checker[permIndex] == 0)
-						fillStr0(pfound2, permIndex, towaste);
-					permIndex++;
-					if (checker[permIndex] == 0)
-						fillStr0(pfound2, permIndex, towaste);
-					permIndex++;
-					if (checker[permIndex] == 0)
-						fillStr0(pfound2, permIndex, towaste);
-					permIndex++;
-					if (checker[permIndex] == 0)
-						fillStr0(pfound2, permIndex, towaste);
-					permIndex++;
-					if (checker[permIndex] == 0)
-						fillStr0(pfound2, permIndex, towaste);
-
+					int aa;
+					for (aa = 0; aa < 6 && mperm_res[towaste] + pfound > max_perm; aa++) {
+						if (checker[permIndex] == 0)
+							fillStr0(pfound2, permIndex, towaste);
+						permIndex++;
+					}
 					towaste--;
-					if (towaste >= 0 && mperm_res[towaste] + pfound > max_perm) {
+					if (towaste >= 0) {
 						permIndex = connected4[tempIndex];
-						if (checker[permIndex] == 0)
-							fillStr0(pfound2, permIndex, towaste);
-						permIndex++;
-						if (checker[permIndex] == 0)
-							fillStr0(pfound2, permIndex, towaste);
-						permIndex++;
-						if (checker[permIndex] == 0)
-							fillStr0(pfound2, permIndex, towaste);
-						permIndex++;
-						if (checker[permIndex] == 0)
-							fillStr0(pfound2, permIndex, towaste);
-						permIndex++;
-						if (checker[permIndex] == 0)
-							fillStr0(pfound2, permIndex, towaste);
-						permIndex++;
-						if (checker[permIndex] == 0)
-							fillStr0(pfound2, permIndex, towaste);
-						permIndex++;
-						if (checker[permIndex] == 0)
-							fillStr0(pfound2, permIndex, towaste);
-						permIndex++;
-						if (checker[permIndex] == 0)
-							fillStr0(pfound2, permIndex, towaste);
-						permIndex++;
-						if (checker[permIndex] == 0)
-							fillStr0(pfound2, permIndex, towaste);
-						permIndex++;
-						if (checker[permIndex] == 0)
-							fillStr0(pfound2, permIndex, towaste);
-						permIndex++;
-						if (checker[permIndex] == 0)
-							fillStr0(pfound2, permIndex, towaste);
-						permIndex++;
-						if (checker[permIndex] == 0)
-							fillStr0(pfound2, permIndex, towaste);
-						permIndex++;
-						if (checker[permIndex] == 0)
-							fillStr0(pfound2, permIndex, towaste);
-						permIndex++;
-						if (checker[permIndex] == 0)
-							fillStr0(pfound2, permIndex, towaste);
-						permIndex++;
-						if (checker[permIndex] == 0)
-							fillStr0(pfound2, permIndex, towaste);
-						permIndex++;
-						if (checker[permIndex] == 0)
-							fillStr0(pfound2, permIndex, towaste);
-						permIndex++;
-						if (checker[permIndex] == 0)
-							fillStr0(pfound2, permIndex, towaste);
-						permIndex++;
-						if (checker[permIndex] == 0)
-							fillStr0(pfound2, permIndex, towaste);
-						permIndex++;
-						if (checker[permIndex] == 0)
-							fillStr0(pfound2, permIndex, towaste);
-						permIndex++;
-						if (checker[permIndex] == 0)
-							fillStr0(pfound2, permIndex, towaste);
-						permIndex++;
-						if (checker[permIndex] == 0)
-							fillStr0(pfound2, permIndex, towaste);
-						permIndex++;
-						if (checker[permIndex] == 0)
-							fillStr0(pfound2, permIndex, towaste);
-						permIndex++;
-						if (checker[permIndex] == 0)
-							fillStr0(pfound2, permIndex, towaste);
-						permIndex++;
-						if (checker[permIndex] == 0)
-							fillStr0(pfound2, permIndex, towaste);
+						for (aa = 0; aa < 24 && mperm_res[towaste] + pfound > max_perm; aa++) {
+							if (checker[permIndex] == 0)
+								fillStr0(pfound2, permIndex, towaste);
+							permIndex++;
+						}
 					}
 				}
 			}
