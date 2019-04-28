@@ -1,5 +1,7 @@
 # My ChaffinMethod approach
 
+Most of the following consideration are only present in NewChaffinN6.c. For N5 I don't feel an update is required because it already completes in around 250ms, which is a sufficient speed boost from the original 4 minutes.
+
 **Two Lines on the original ChaffinMethod**
 
 Given a string generated, the Chaffin algorithm attaches a character in the final part of the string. If the last N characters are a valid permutation, and if the the number of wasted characters doesn't go over the limit, it keeps going.
@@ -13,8 +15,6 @@ Given the index of the starting string (012345, which is equals to 0), with the 
 The permutations of 0 and 1 wasted characters are unique (e.g. 012345 with w = 0 gives 0123450, while 012345 with w = 1 gives 01234510, so just  a character swap between the first two), while for the others a different strategy is used: given 012345 we know that we have 2 possible for w = 2, 6 for w = 3, and 24 for w = 4. These permutations are consecutive thanks to the indexing, so we just need to get the first permutation of each and the others can be found just adding consecutive +1 to the index generated.
 
 To speed things even further, first it is checked if there are any connected0 values that have not been checked. If so, it keeps going. If now, it's checked if there is a connected1 available. If there is places it and goes back to check connected0, if not it checks connected2, and so on. If by placing a new permutation from connected1 or more the number of wasted characters goes through the limit, it kills the goes back.
-
-This are the basic structure and ideas that were used in newChaffinN6.c
 
 **Some notes on the speed-up strategies used**
 There are 4 main strategies used to kill the inefficient and useless branches:
