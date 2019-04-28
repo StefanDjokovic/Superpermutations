@@ -1,11 +1,6 @@
-//This code uses the following assumptions to run as fast as possible (Still not speedy enough to reach the final result in a valuable time):
-//1) In the shortest superpermutation a permutation appears only once; it's considered to be true, but there is no
-//proof yet
-//2) The maximum number of new permutation after adding a new wasted character will be equals or less than 6. The discussion
-//is still going on, but it's thought to be true.
-
 //Seems to be working well, but it still requires some improvements to be able to reach the final result
 //Also this version doesn't print the partial results, will add that soon
+//read README for more information
 
 #include <math.h>
 #include <stdio.h>
