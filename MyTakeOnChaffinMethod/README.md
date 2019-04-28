@@ -6,9 +6,9 @@ Given a string generated, the Chaffin algorithm attaches a character in the fina
 
 **My program**
 
-Instead of placing a random character, my program places a permutation. This speeds the Chaffin algorithm because there is no need to check if the string generated contains a new permutation.
+Instead of placing a random character, my idea was placing permutations. This speeds the Chaffin algorithm because there is no need to check if the string generated contains a new permutation, and there are other tricks that can only be applied with this method.
 
-Another imporant implementation is an exact indexing of permutations, which makes possible the use of the following strategy.
+Another imporant implementation is an exact and ordered index of permutations, which makes possible the use of the following strategy.
 Given the index of the starting string (012345, which is equals to 0), with the arrays connected0, connected1, ... connected5 I can instantly get the index value of a permutation that can be placed in the string with 0 wasted characters, 1  wasted characters and so on. 
 The permutations of 0 and 1 wasted characters are unique (e.g. 012345 with w = 0 gives 0123450, while 012345 with w = 1 gives 01234510, so just  a character swap between the first two), while for the others a different strategy is used: given 012345 we know that we have 2 possible for w = 2, 6 for w = 3, and 24 for w = 4. These permutations are consecutive thanks to the indexing, so we just need to get the first permutation of each and the others can be found just adding consecutive +1 to the index generated.
 
