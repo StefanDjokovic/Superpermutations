@@ -1,8 +1,6 @@
-//Still working on it, for now trying to improve for N = 5
-//This code has improved the speed of the original Chaffin code from 4m to 2.5s for N = 5
-//It works but there are many things to improve, uploading this just for reference
-//The code has no comments, I will add them soon, and it needs to be reorganized
-//Most of it works on the same base as the hashValue search
+//This code has improved the speed of the original Chaffin code from 4m to 0.25s for N = 5
+//The commented code is in NewChaffinN6.c with some various other improvement
+//Because it works well already I didn't introduced the improvements here
 
 #include <math.h>
 #include <stdio.h>
