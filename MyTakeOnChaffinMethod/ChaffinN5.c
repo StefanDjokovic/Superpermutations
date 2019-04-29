@@ -33,18 +33,12 @@ int getHashValue2(int * string) {
 	}
 	val = upper[val];
 
-	//printf("%d ", val);
-
 	return val;
 }
 
 void max(int a, short int b, int pos) {
 	if (b > a) {
 		max_perm = b;
-		/*printf("result: ");
-		for (int i = 0; i < pos && max_perm < 40; i++)
-			printf("%d", curstr[i]);
-		printf(" .... ");*/
 	}
 
 }
@@ -412,7 +406,7 @@ int main()
 		connected4[i] = getHashValue2(&conn[4]);
 	}
 
-	checker = (bool*)malloc(sizeof(bool) * factval[N]); //RICORDATI DI AZZERARLO!
+	checker = (bool*)malloc(sizeof(bool) * factval[N]); 
 	///END OF GENERATING CONNECTIONS ETC
 
 
