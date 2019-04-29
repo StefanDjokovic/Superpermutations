@@ -274,10 +274,10 @@ int main()
 
 	upper = (long int*)calloc(pow(N, N + 2), sizeof(long int)); //a bit excessive, to improve
 	power = (int*)malloc(sizeof(int) * (N * 2 + 1));
-	connected1 = (int*)malloc(sizeof(int) * factorial(N));
-	connected2 = (int*)malloc(sizeof(int) * factorial(N));
-	connected3 = (int*)malloc(sizeof(int) * factorial(N));
-	connected4 = (int*)malloc(sizeof(int) * factorial(N));
+	connected1 = (int*)malloc(sizeof(int) * factorial(N) +1);
+	connected2 = (int*)malloc(sizeof(int) * factorial(N) +1);
+	connected3 = (int*)malloc(sizeof(int) * factorial(N)+ 1);
+	connected4 = (int*)malloc(sizeof(int) * factorial(N) +1);
 
 	for (int i = 0; i < factorial(N); i++) {
 		connected1[i] = 0;
@@ -332,7 +332,7 @@ int main()
 	}
 
 	//generationg connected1 and connected2
-	int * conn = (int*)malloc(sizeof(int) * (N + 2));
+	int * conn = (int*)malloc(sizeof(int) * (N + N));
 	for (int i = 0; i < factorial(N); i++) {
 		for (int s = 0; s < N; s++)
 			arr[s] = 0;
