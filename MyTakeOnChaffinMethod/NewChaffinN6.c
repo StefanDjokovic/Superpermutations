@@ -1,5 +1,6 @@
-/*The new code with output asks at the beginning in which directory to place the file which is formed by
-wasted charactes _ maxperm \n the permutation in index values
+/*The new code asks at the beginning in which directory to place the output file.
+Its format will be:
+(wasted charactes) (max_perm)\n(the maximum permutation found)
 */
 
 //Seems to be working well, but it still requires some improvements to be able to reach the final result
@@ -403,7 +404,7 @@ void print() {
 		else if (connected4[best_perm[i - 1]] >= best_perm[i] && connected4[best_perm[i - 1]] + 24 < best_perm[i])
 			wast = N - 5;
 		else {
-			//an error message for debugging
+			//error message for debugging
 			printf("ERROR!!! at %d, values are %d and %d\n", i, best_perm[i - 1], best_perm[i]);
 			printf("connected2[best_perm[i - 1]]: %d %d\n", connected2[best_perm[i - 1]], connected2[best_perm[i - 1]] + 1);
 			fprintf(fp, "ERROR HERE, PERMS ARE: ");
