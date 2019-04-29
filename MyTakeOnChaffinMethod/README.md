@@ -1,5 +1,7 @@
 # My ChaffinMethod approach
 
+!The code has an important bug I will try to fix in the following days!
+
 Most of the following consideration are only present in NewChaffinN6.c. For N5 I don't feel an update is required because it already completes in around 250ms, which is a sufficient speed boost from the original 4 minutes.
 
 **Two Lines on the original ChaffinMethod**
