@@ -1,3 +1,7 @@
+//IT NEEDS SOME FIXING, NOT ALL THE PERMUTATIONS ARE CHECKED
+//THANKS MILES FOR REPORTING THE ISSUE
+
+
 /*The new code asks at the beginning in which directory to place the output file.
 Its format will be:
 (wasted charactes) (max_perm)\n(the maximum permutation found)
