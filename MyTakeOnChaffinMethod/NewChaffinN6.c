@@ -1,11 +1,8 @@
 /*The new code with output asks at the beginning in which directory to place the file which is formed by
 wasted charactes _ maxperm \n the permutation in index values
-
-I will add soon a tool to convert index values to permutation, so that the result can be easily checked
 */
 
 //Seems to be working well, but it still requires some improvements to be able to reach the final result
-//Also this version doesn't print the partial results, will add that soon
 //read README for more information
 
 #include <math.h>
@@ -21,8 +18,7 @@ short tot_bl;			//wasted character
 short N;				//N = 6 in this version, it's the number of different characters
 
 bool* checker;			//this array is used to keep the permutation used 
-int* factval;			//array with the useful factorials			
-int* power;				//array with the useful powers of N
+int* factval;			//array with the useful factorials
 //used to build the indexing of the arrays
 bool* arr;
 int* upper;
@@ -36,7 +32,7 @@ short* connected3;		//3 wasted characters
 short* connected4;		//4 wasted characters
 short stopit;			//factval[N], the number of possible permutations at which the result is found
 short stopitover;		//it's +N, the maximum number of characters generated with +1 wasted characters
-int gotit;				//signals if a permutation of higher max_val was found
+int gotit;			//signals if a permutation of higher max_val was found
 
 FILE * fp;
 
@@ -51,6 +47,10 @@ int getIndex(int* string);
 
 //function that fills the strings in and checks their values
 void fillStr0(short int pfound, short int permIndex, short int towaste);
+
+void getstring(short index, int start);
+
+void print();
 
 //main body
 int main() {
@@ -80,7 +80,6 @@ int main() {
 
 	//allocating in memory the arrays needed
 	upper = (int*)calloc(pow(N, N + 1), sizeof(int)); //a bit excessive, to improve
-	power = (int*)malloc(sizeof(int) * (N * 2 + 1));
 	connected0 = (short*)malloc(sizeof(short) * factval[N]);
 	connected1 = (short*)malloc(sizeof(short) * factval[N]);
 	connected2 = (short*)malloc(sizeof(short) * factval[N]);
@@ -96,11 +95,6 @@ int main() {
 		connected2[i] = 0;
 		connected3[i] = 0;
 		connected4[i] = 0;
-	}
-
-	//initializing power
-	for (int i = 0; i <= N * 2; i++) {
-		power[i] = pow(N, i);
 	}
 	//initializing arr
 	arr = (bool*)malloc(N * sizeof(bool));
@@ -265,10 +259,9 @@ int main() {
 		printf("%d wasted characters: at most %d permutations\n", tot_bl, max_perm);
 
 		fprintf(fp, "%d %d\n", tot_bl, max_perm);
-		for (int k = 0; k < max_perm; k++)
-			fprintf(fp, "%d ", best_perm[k]);
+		print();
 		fprintf(fp, "\n");
-
+		
 		max_perm = max_perm + 4;	//to speed things up the hypotesis is that the new perm will be higher than the current+4
 
 		if (max_perm >= factval[N]) {
@@ -358,4 +351,67 @@ int factorial(int val) {
 		res = res * i;
 	}
 	return res;
+}
+
+void getstring(short index, int start) {
+	int step, k;
+	int a;
+	int resu[6];
+	a = index / factval[N - 1];
+	resu[0] = a + 1;
+	long int upperValue;
+	for (int s = 0; s < N; s++)
+		arr[s] = 0;
+
+
+	arr[a] = 1;
+	upperValue = a;
+
+	for (int j = 1; j < N; j++) {
+		a = index % factval[N - j];
+		step = a / factval[N - (j + 1)];
+
+		k = 0;
+		while (arr[k] == 1)
+			k++;
+		while (step != 0) {
+			if (arr[k] != 1)
+				step--;
+			k++;
+			while (arr[k] == 1)
+				k++;
+		}
+		arr[k] = 1;
+		resu[j] = k + 1;
+	}
+	for (int i = start; i < N; i++)
+		fprintf(fp, "%d", resu[i]);
+}
+
+void print() {
+	int wast = 0;
+	getstring(best_perm[0], wast);
+	for (int i = 1; i < max_perm; i++) {
+		if (connected0[best_perm[i - 1]] == best_perm[i])
+			wast = N - 1;
+		else if (connected1[best_perm[i - 1]] == best_perm[i])
+			wast = N - 2;
+		else if (connected2[best_perm[i - 1]] == best_perm[i] || connected2[best_perm[i - 1]] + 1 == best_perm[i])
+			wast = N - 3;
+		else if (connected3[best_perm[i - 1]] >= best_perm[i] && connected3[best_perm[i - 1]] + 6 < best_perm[i])
+			wast = N - 4;
+		else if (connected4[best_perm[i - 1]] >= best_perm[i] && connected4[best_perm[i - 1]] + 24 < best_perm[i])
+			wast = N - 5;
+		else {
+			//an error message for debugging
+			printf("ERROR!!! at %d, values are %d and %d\n", i, best_perm[i - 1], best_perm[i]);
+			printf("connected2[best_perm[i - 1]]: %d %d\n", connected2[best_perm[i - 1]], connected2[best_perm[i - 1]] + 1);
+			fprintf(fp, "ERROR HERE, PERMS ARE: ");
+			getstring(best_perm[i - 1], 0);
+			fprintf(fp, " AND ");
+			getstring(best_perm[i], 0);
+			return;
+		}
+		getstring(best_perm[i], wast);
+	}
 }
