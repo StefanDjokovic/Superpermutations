@@ -1,3 +1,9 @@
+/*The new code with output asks at the beginning in which directory to place the file which is formed by
+wasted charactes _ maxperm \n the permutation in index values
+
+I will add soon a tool to convert index values to permutation, so that the result can be easily checked
+*/
+
 //Seems to be working well, but it still requires some improvements to be able to reach the final result
 //Also this version doesn't print the partial results, will add that soon
 //read README for more information
