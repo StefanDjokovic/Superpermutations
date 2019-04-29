@@ -23,3 +23,5 @@ There are 4 main strategies used to kill the inefficient and useless branches:
 2. The program first check if, after adding a new wasted character, there are at least 5 new permutation. If it doesn't happen, it goes to 4, than 3 etc.
 3. checker == 0 actually doesn't elimitate the presence of multiple permutations in the complete superpermutation. One explecative example: given 12345612345 checker==0 will avoid the placement of the digit 6 at the end (in fact 123456 was already present at the beginning) but a 6 may appear with 3 wasted characters when 456132 is added. In fact the string 123456123456132 will be checked, making sure that all the possible valuable string are checked
 4. mperm_res[towaste] + pfound > max_perm also checks if it's possible that with a certain ammount of wasted characters left to get to a better max_perm. This is strongly tied to point 2 because max_perm is initialized as the precedent max_perm + 4. 
+
+![image](https://imgur.com/ufW0LCo)
