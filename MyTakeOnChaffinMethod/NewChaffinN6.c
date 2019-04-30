@@ -30,14 +30,12 @@ int* upper;
 short dong[3];
 short dong2[4];
 //given the index, the connected structure gives the lowest index of the permutation connected with it 
-short* connected0;		//0 wasted characters
-short* connected1;		//1 wasted characters
-short* connected2;		//2 wasted characters
-short* connected3;		//3 wasted characters
-short* connected4;		//4 wasted characters
+short connected[720][89]; 
+
 short stopit;			//factval[N], the number of possible permutations at which the result is found
 short stopitover;		//it's +N, the maximum number of characters generated with +1 wasted characters
 int gotit;			//signals if a permutation of higher max_val was found
+
 
 FILE * fp;
 
@@ -53,9 +51,9 @@ int getIndex(int* string);
 //function that fills the strings in and checks their values
 void fillStr0(short int pfound, short int permIndex, short int towaste);
 
-void getstring(short index, int start);
+//void getstring(short index, int start);
 
-void print();
+//void print();
 
 //main body
 int main() {
@@ -66,7 +64,7 @@ int main() {
 	char filepos[300];
 	printf("Please, specify file directory where max_perm will be place (example: C:\\Users\\...:\n");
 	scanf("%149[^\n]%*c", filepos);
-	
+
 	fp = fopen(filepos, "w");
 	if (fp == NULL) {
 		printf("Error with opening the file\n");
@@ -85,22 +83,9 @@ int main() {
 
 	//allocating in memory the arrays needed
 	upper = (int*)calloc(pow(N, N + 1), sizeof(int)); //a bit excessive, to improve
-	connected0 = (short*)malloc(sizeof(short) * factval[N]);
-	connected1 = (short*)malloc(sizeof(short) * factval[N]);
-	connected2 = (short*)malloc(sizeof(short) * factval[N]);
-	connected3 = (short*)malloc(sizeof(short) * factval[N]);
-	connected4 = (short*)malloc(sizeof(short) * factval[N]);
 
 	checker = (bool*)malloc(sizeof(bool) * factval[N]);
 
-	//zeroing, just a safety measure, could have used calloc insted
-	for (int i = 0; i < factorial(N); i++) {
-		connected0[i] = 0;
-		connected1[i] = 0;
-		connected2[i] = 0;
-		connected3[i] = 0;
-		connected4[i] = 0;
-	}
 	//initializing arr
 	arr = (bool*)malloc(N * sizeof(bool));
 	for (int s = 0; s < N; s++)
@@ -169,22 +154,53 @@ int main() {
 			arr[k] = 1;
 			conn[j] = k;
 		}
-		connected0[i] = getIndex(&conn[1]);
+		//0 waste: 0
+		connected[i][0] = getIndex(&conn[1]);
+		//1 waste: 1
 		conn[N] = conn[1];
 		conn[N + 1] = conn[0];
-		connected1[i] = getIndex(&conn[2]);
+		connected[i][1] = getIndex(&conn[2]);
+		//2 waste: 2 - 4
+		conn[N + 1] = conn[2];
+		conn[N + 2] = conn[0];
+		connected[i][2] = getIndex(&conn[3]);
 		conn[N] = conn[2];
-		if (conn[0] < conn[1]) {
-			conn[N + 1] = conn[0];
-			conn[N + 2] = conn[1];
-		}
-		else {
-			conn[N + 1] = conn[1];
-			conn[N + 2] = conn[0];
-		}
-		connected2[i] = getIndex(&conn[3]);
+		conn[N + 1] = conn[0];
+		conn[N + 2] = conn[1];
+		connected[i][3] = getIndex(&conn[3]);
+		conn[N + 1] = conn[1];
+		conn[N + 2] = conn[0];
+		connected[i][4] = getIndex(&conn[3]);
+		//3 waste: 5 - 17
+		conn[N] = conn[1];
+		conn[N + 1] = conn[2];
+		conn[N + 2] = conn[3];
+		conn[N + 3] = conn[0];
+		connected[i][5] = getIndex(&conn[4]);
+		conn[N + 1] = conn[3];
+		conn[N + 2] = conn[0];
+		conn[N + 3] = conn[2];
+		connected[i][6] = getIndex(&conn[4]);
+		conn[N + 2] = conn[2];
+		conn[N + 3] = conn[0];
+		connected[i][7] = getIndex(&conn[4]);
 
-		//building connected3
+		conn[N] = conn[2];
+		conn[N + 1] = conn[0];
+		conn[N + 2] = conn[3];
+		conn[N + 3] = conn[1];
+		connected[i][8] = getIndex(&conn[4]);
+		conn[N + 1] = conn[1];
+		conn[N + 3] = conn[0];
+		connected[i][9] = getIndex(&conn[4]);
+		conn[N + 1] = conn[3];
+		conn[N + 2] = conn[0];
+		conn[N + 3] = conn[1];
+		connected[i][10] = getIndex(&conn[4]);
+		conn[N + 2] = conn[1];
+		conn[N + 3] = conn[0];
+		connected[i][11] = getIndex(&conn[4]);
+
 		conn[N] = conn[3];
 		for (int k = 0; k < 3; k++)
 			dong2[k] = conn[k];
@@ -197,21 +213,93 @@ int main() {
 			}
 		for (int k = 0; k < 3; k++)
 			conn[k + 1 + N] = dong2[k];
-		connected3[i] = getIndex(&conn[4]);
 
-		//building connected4
-		conn[N] = conn[4];
-		for (int k = 0; k < 4; k++)
-			dong2[k] = conn[k];
-		for (int k = 1; k < 4; k++)
-			for (int j = k; j > 0 && dong2[j - 1] > dong2[j]; j--) {
-				kk = dong2[j];
-				dong2[j] = dong2[j - 1];
-				dong2[j - 1] = kk;
-			}
-		for (int k = 0; k < 4; k++)
-			conn[k + 1 + N] = dong2[k];
-		connected4[i] = getIndex(&conn[5]);
+		for (int j = 0; j < 6; j++) {
+			connected[i][12 + j] = getIndex(&conn[4]) + j;
+		}
+
+		//4 waste: 18 - 88
+		conn[N] = conn[1];
+		conn[N + 1] = conn[2];
+		conn[N + 2] = conn[3];
+		conn[N + 3] = conn[4];
+		conn[N + 4] = conn[0];
+		connected[i][18] = getIndex(&conn[5]);
+		conn[N + 2] = conn[4];
+		conn[N + 3] = conn[0];
+		conn[N + 4] = conn[3];
+		connected[i][19] = getIndex(&conn[5]);
+		conn[N + 3] = conn[3];
+		conn[N + 4] = conn[0];
+		connected[i][20] = getIndex(&conn[5]);
+		conn[N + 1] = conn[3];
+		conn[N + 2] = conn[0];
+		conn[N + 3] = conn[4];
+		conn[N + 4] = conn[2];
+		connected[i][21] = getIndex(&conn[5]);
+		conn[N + 2] = conn[2];
+		conn[N + 4] = conn[0];
+		connected[i][22] = getIndex(&conn[5]);
+		conn[N + 1] = conn[3];
+		conn[N + 2] = conn[4];
+		conn[N + 3] = conn[0];
+		conn[N + 4] = conn[2];
+		connected[i][23] = getIndex(&conn[5]);
+		conn[N + 3] = conn[2];
+		conn[N + 4] = conn[0];
+		connected[i][24] = getIndex(&conn[5]);
+		conn[N + 1] = conn[4];
+
+		conn[N + 2] = conn[0];
+		conn[N + 3] = conn[2];
+		conn[N + 4] = conn[3];
+		connected[i][25] = getIndex(&conn[5]);
+		conn[N + 3] = conn[3];
+		conn[N + 4] = conn[2];
+		connected[i][26] = getIndex(&conn[5]);
+		conn[N + 2] = conn[2];
+		conn[N + 3] = conn[0];
+		conn[N + 4] = conn[3];
+		connected[i][27] = getIndex(&conn[5]);
+		conn[N + 3] = conn[3];
+		conn[N + 4] = conn[0];
+		connected[i][28] = getIndex(&conn[5]);
+		conn[N + 2] = conn[3];
+		conn[N + 3] = conn[0];
+		conn[N + 4] = conn[2];
+		connected[i][29] = getIndex(&conn[5]);
+		conn[N + 3] = conn[2];
+		conn[N + 4] = conn[0];
+		connected[i][30] = getIndex(&conn[5]);
+
+		conn[N] = conn[2];
+		conn[N + 1] = conn[0];
+		conn[N + 2] = conn[3];
+		conn[N + 3] = conn[4];
+		conn[N + 4] = conn[1];
+		connected[i][31] = getIndex(&conn[5]);
+		connected[i][32] = connected[i][31] + 1;
+		connected[i][33] = connected[i][32] + 1;
+		connected[i][34] = connected[i][33] + 4;
+		connected[i][35] = connected[i][34] + 1;
+		connected[i][36] = connected[i][35] + 1;
+		connected[i][37] = connected[i][36] + 2;
+		connected[i][38] = connected[i][37] + 2;
+		for (int p = 1; p <= 8; p++)
+			connected[i][38 + p] = connected[i][38] + p;
+		connected[i][47] = connected[i][46] + 2;
+		connected[i][48] = connected[i][47] + 2;
+		connected[i][49] = connected[i][48] + 1;
+		connected[i][50] = connected[i][49] + 1;
+		connected[i][51] = connected[i][50] + 2;
+		connected[i][52] = connected[i][51] + 2;
+		connected[i][53] = connected[i][52] + 1;
+		connected[i][54] = connected[i][53] + 1;
+		connected[i][55] = connected[i][54] + 2;
+		for (int p = 1; p <= 9; p++)
+			connected[i][55 + p] = connected[i][55] + 1 + p;
+		for (int p = 1; p <= 24; p++)
+			connected[i][64 + p] = connected[i][64] + p;
 
 	}
 
@@ -264,9 +352,9 @@ int main() {
 		printf("%d wasted characters: at most %d permutations\n", tot_bl, max_perm);
 
 		fprintf(fp, "%d %d\n", tot_bl, max_perm);
-		print();
+		//print();
 		fprintf(fp, "\n");
-		
+
 		max_perm = max_perm + 4;	//to speed things up the hypotesis is that the new perm will be higher than the current+4
 
 		if (max_perm >= factval[N]) {
@@ -293,48 +381,48 @@ void fillStr0(short int pfound, short int permIndex, short int towaste) {
 	}
 
 	if (max_perm < stopit && max_perm < stopitover) {
-		int tempIndex = permIndex;
-		checker[tempIndex] = 1;
+		int checked = 0;
+		checker[permIndex] = 1;
 		int pfound2 = pfound + 1;
 
 		//Making unwasted characters
-		if (checker[connected0[tempIndex]] == 0)
-			fillStr0(pfound2, connected0[tempIndex], towaste);
+		if (checker[connected[permIndex][checked]] == 0)
+			fillStr0(pfound2, connected[permIndex][checked], towaste);
 		towaste--;
+		checked = 1;
 		if (towaste >= 0 && mperm_res[towaste] + pfound > max_perm) {
-			if (checker[connected1[tempIndex]] == 0)
-				fillStr0(pfound2, connected1[tempIndex], towaste);
+			if (checker[connected[permIndex][checked]] == 0)
+				fillStr0(pfound2, connected[permIndex][checked], towaste);
 			towaste--;
 			if (towaste >= 0 && mperm_res[towaste] + pfound > max_perm) {
-				permIndex = connected2[tempIndex];
-				if (checker[permIndex] == 0)
-					fillStr0(pfound2, permIndex, towaste);
-				permIndex++;
-				if (checker[permIndex] == 0)
-					fillStr0(pfound2, permIndex, towaste);
+				checked = 2;
+				if (checker[connected[permIndex][checked]] == 0)
+					fillStr0(pfound2, connected[permIndex][checked], towaste);
+				checked++;
+				if (checker[connected[permIndex][checked]] == 0)
+					fillStr0(pfound2, connected[permIndex][checked], towaste);
+				checked++;
+				if (checker[connected[permIndex][checked]] == 0)
+					fillStr0(pfound2, connected[permIndex][checked], towaste);
+				checked++;
 				towaste--;
 				if (towaste >= 0 && mperm_res[towaste] + pfound > max_perm) {
-					permIndex = connected3[tempIndex];
-					int aa;
-					for (aa = 0; aa < 6 && mperm_res[towaste] + pfound > max_perm; aa++) {
-						if (checker[permIndex] == 0)
-							fillStr0(pfound2, permIndex, towaste);
-						permIndex++;
+					for (checked = 5; checked < 18 && mperm_res[towaste] + pfound > max_perm; checked++) {
+						if (checker[connected[permIndex][checked]] == 0)
+							fillStr0(pfound2, connected[permIndex][checked], towaste);
 					}
 					towaste--;
 					if (towaste >= 0) {
-						permIndex = connected4[tempIndex];
-						for (aa = 0; aa < 24 && mperm_res[towaste] + pfound > max_perm; aa++) {
-							if (checker[permIndex] == 0)
-								fillStr0(pfound2, permIndex, towaste);
-							permIndex++;
+						for (checked = 18; checked < 89 && mperm_res[towaste] + pfound > max_perm; checked++) {
+							if (checker[connected[permIndex][checked]] == 0)
+								fillStr0(pfound2, connected[permIndex][checked], towaste);
 						}
 					}
 				}
 			}
 
 		}
-		checker[tempIndex] = 0;
+		checker[permIndex] = 0;
 	}
 }
 
@@ -358,7 +446,7 @@ int factorial(int val) {
 	return res;
 }
 
-void getstring(short index, int start) {
+/*void getstring(short index, int start) {
 	int step, k;
 	int a;
 	int resu[6];
@@ -419,4 +507,4 @@ void print() {
 		}
 		getstring(best_perm[i], wast);
 	}
-}
+}*/
