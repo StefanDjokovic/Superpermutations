@@ -1,11 +1,23 @@
-/*THE OUTPUT WILL BE FIXED SOON
-The new code asks at the beginning in which directory to place the output file.
-Its format will be:
-(wasted charactes) (max_perm)\n(the maximum permutation found)
+//The objective of this code is to find the smallest superpermutation possible of 6 different characters,
+//and prove that it's the smallest superpermutation possible
+
+/*This program is based on the Chaffin Method, its description 
+and the original code can be found here: 
+http://www.njohnston.ca/2014/08/all-minimal-superpermutations-on-five-symbols-have-been-found/
+
+My approach is slightly different: instead of looking character per character, I do the 
+search by looking the possible permutation that can be added
+The code also assumes that no connectetion of wasted characters = 6 or more is beneficial
+to the formation of the minimal superpermutation (conjecture still to be formally proven)
 */
 
-//Seems to be working well, but it still requires some improvements to be able to reach the final result
-//will update the README soon
+/*The program asks at the beginning in which directory to place the output file.
+Output file's format will be:
+(wasted charactes) (max_perm)\n(the maximum permutation found)\n
+*/
+
+
+//It works well, but it still requires some improvements to be able to reach the final result
 
 #include <math.h>
 #include <stdio.h>
@@ -26,7 +38,7 @@ bool* arr;
 int* upper;
 short dong[3];
 short dong2[4];
-//given the index, the connected structure gives the lowest index of the permutation connected with it 
+//given the index, the connected matrix gives the lowest index of the permutation connected with it 
 short connected[720][89]; 
 
 short stopit;			//factval[N], the number of possible permutations at which the result is found
@@ -48,9 +60,9 @@ int getIndex(int* string);
 //function that fills the strings in and checks their values
 void fillStr0(short int pfound, short int permIndex, short int towaste);
 
-//void getstring(short index, int start);
+void getstring(short index, int start);
 
-//void print();
+void print();
 
 //main body
 int main() {
@@ -61,6 +73,8 @@ int main() {
 	char filepos[300];
 	printf("Please, specify file directory where max_perm will be place (example: C:\\Users\\...:\n");
 	scanf("%149[^\n]%*c", filepos);
+	char attach[] = "\\output.txt";
+	strcat(filepos, attach);
 
 	fp = fopen(filepos, "w");
 	if (fp == NULL) {
@@ -349,7 +363,7 @@ int main() {
 		printf("%d wasted characters: at most %d permutations\n", tot_bl, max_perm);
 
 		fprintf(fp, "%d %d\n", tot_bl, max_perm);
-		//print();
+		print();
 		fprintf(fp, "\n");
 
 		max_perm = max_perm + 4;	//to speed things up the hypotesis is that the new perm will be higher than the current+4
@@ -443,7 +457,7 @@ int factorial(int val) {
 	return res;
 }
 
-/*void getstring(short index, int start) {
+void getstring(short index, int start) {
 	int step, k;
 	int a;
 	int resu[6];
@@ -480,28 +494,33 @@ int factorial(int val) {
 
 void print() {
 	int wast = 0;
+	int q;
 	getstring(best_perm[0], wast);
 	for (int i = 1; i < max_perm; i++) {
-		if (connected0[best_perm[i - 1]] == best_perm[i])
-			wast = N - 1;
-		else if (connected1[best_perm[i - 1]] == best_perm[i])
-			wast = N - 2;
-		else if (connected2[best_perm[i - 1]] == best_perm[i] || connected2[best_perm[i - 1]] + 1 == best_perm[i])
-			wast = N - 3;
-		else if (connected3[best_perm[i - 1]] >= best_perm[i] && connected3[best_perm[i - 1]] + 6 < best_perm[i])
-			wast = N - 4;
-		else if (connected4[best_perm[i - 1]] >= best_perm[i] && connected4[best_perm[i - 1]] + 24 < best_perm[i])
-			wast = N - 5;
-		else {
-			//error message for debugging
-			printf("ERROR!!! at %d, values are %d and %d\n", i, best_perm[i - 1], best_perm[i]);
-			printf("connected2[best_perm[i - 1]]: %d %d\n", connected2[best_perm[i - 1]], connected2[best_perm[i - 1]] + 1);
-			fprintf(fp, "ERROR HERE, PERMS ARE: ");
-			getstring(best_perm[i - 1], 0);
-			fprintf(fp, " AND ");
-			getstring(best_perm[i], 0);
-			return;
+		int stop = 0;
+		for (q = 0; q < 90 && stop == 0; q++) {
+			if (q == 90) {
+				printf("ERROR!!! at %d, values are %d and %d\n", i, best_perm[i - 1], best_perm[i]);
+				fprintf(fp, "ERROR HERE, PERMS ARE: ");
+				getstring(best_perm[i - 1], 0);
+				fprintf(fp, " AND ");
+				getstring(best_perm[i], 0);
+				return;
+			}
+			else if (connected[best_perm[i - 1]][q] == best_perm[i]) {
+				stop = 1;
+			}
 		}
-		getstring(best_perm[i], wast);
+		q--;
+		if (q == 0)
+			getstring(best_perm[i], N - 1);
+		if (q == 1)
+			getstring(best_perm[i], N - 2);
+		if (q >= 2 && q <= 4)
+			getstring(best_perm[i], N - 3);
+		if (q >= 5 && q <= 17)
+			getstring(best_perm[i], N - 4);
+		if (q >= 18 && q <= 88)
+			getstring(best_perm[i], N - 5);
 	}
-}*/
+}
