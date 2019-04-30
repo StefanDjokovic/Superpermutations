@@ -1,14 +1,11 @@
-//IT NEEDS SOME FIXING, NOT ALL THE PERMUTATIONS ARE CHECKED
-//THANKS MILES FOR REPORTING THE ISSUE
-
-
-/*The new code asks at the beginning in which directory to place the output file.
+/*THE OUTPUT WILL BE FIXED SOON
+The new code asks at the beginning in which directory to place the output file.
 Its format will be:
 (wasted charactes) (max_perm)\n(the maximum permutation found)
 */
 
 //Seems to be working well, but it still requires some improvements to be able to reach the final result
-//read README for more information
+//will update the README soon
 
 #include <math.h>
 #include <stdio.h>
