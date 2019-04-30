@@ -1,11 +1,11 @@
 //The objective of this code is to find the smallest superpermutation possible of 6 different characters,
 //and prove that it's the smallest superpermutation possible
 
-/*This program is based on the Chaffin Method, its description 
-and the original code can be found here: 
+/*This program is based on the Chaffin Method, its description
+and the original code can be found here:
 http://www.njohnston.ca/2014/08/all-minimal-superpermutations-on-five-symbols-have-been-found/
 
-My approach is slightly different: instead of looking character per character, I do the 
+My approach is slightly different: instead of looking character per character, I do the
 search by looking the possible permutation that can be added
 The code also assumes that no connectetion of wasted characters = 6 or more is beneficial
 to the formation of the minimal superpermutation (conjecture still to be formally proven)
@@ -38,8 +38,9 @@ bool* arr;
 int* upper;
 short dong[3];
 short dong2[4];
+short dong3[5];
 //given the index, the connected matrix gives the lowest index of the permutation connected with it 
-short connected[720][89]; 
+short connected[720][89];
 
 short stopit;			//factval[N], the number of possible permutations at which the result is found
 short stopitover;		//it's +N, the maximum number of characters generated with +1 wasted characters
@@ -283,35 +284,191 @@ int main() {
 		conn[N + 4] = conn[0];
 		connected[i][30] = getIndex(&conn[5]);
 
+
 		conn[N] = conn[2];
 		conn[N + 1] = conn[0];
 		conn[N + 2] = conn[3];
 		conn[N + 3] = conn[4];
 		conn[N + 4] = conn[1];
 		connected[i][31] = getIndex(&conn[5]);
-		connected[i][32] = connected[i][31] + 1;
-		connected[i][33] = connected[i][32] + 1;
-		connected[i][34] = connected[i][33] + 4;
-		connected[i][35] = connected[i][34] + 1;
-		connected[i][36] = connected[i][35] + 1;
-		connected[i][37] = connected[i][36] + 2;
-		connected[i][38] = connected[i][37] + 2;
-		for (int p = 1; p <= 8; p++)
-			connected[i][38 + p] = connected[i][38] + p;
-		connected[i][47] = connected[i][46] + 2;
-		connected[i][48] = connected[i][47] + 2;
-		connected[i][49] = connected[i][48] + 1;
-		connected[i][50] = connected[i][49] + 1;
-		connected[i][51] = connected[i][50] + 2;
-		connected[i][52] = connected[i][51] + 2;
-		connected[i][53] = connected[i][52] + 1;
-		connected[i][54] = connected[i][53] + 1;
-		connected[i][55] = connected[i][54] + 2;
-		for (int p = 1; p <= 9; p++)
-			connected[i][55 + p] = connected[i][55] + 1 + p;
-		for (int p = 1; p <= 24; p++)
-			connected[i][64 + p] = connected[i][64] + p;
+		conn[N + 1] = conn[0];
+		conn[N + 2] = conn[4];
+		conn[N + 3] = conn[1];
+		conn[N + 4] = conn[3];
+		connected[i][32] = getIndex(&conn[5]);
+		conn[N + 1] = conn[0];
+		conn[N + 2] = conn[4];
+		conn[N + 3] = conn[3];
+		conn[N + 4] = conn[1];
+		connected[i][33] = getIndex(&conn[5]);
+		conn[N + 1] = conn[1];
+		conn[N + 2] = conn[3];
+		conn[N + 3] = conn[4];
+		conn[N + 4] = conn[0];
+		connected[i][34] = getIndex(&conn[5]);
+		conn[N + 1] = conn[1];
+		conn[N + 2] = conn[4];
+		conn[N + 3] = conn[0];
+		conn[N + 4] = conn[3];
+		connected[i][35] = getIndex(&conn[5]);
+		conn[N + 1] = conn[1];
+		conn[N + 2] = conn[4];
+		conn[N + 3] = conn[3];
+		conn[N + 4] = conn[0];
+		connected[i][36] = getIndex(&conn[5]);
+		conn[N + 1] = conn[3];
+		conn[N + 2] = conn[0];
+		conn[N + 3] = conn[4];
+		conn[N + 4] = conn[1];
+		connected[i][37] = getIndex(&conn[5]);
+		conn[N + 1] = conn[3];
+		conn[N + 2] = conn[1];
+		conn[N + 3] = conn[4];
+		conn[N + 4] = conn[0];
+		connected[i][38] = getIndex(&conn[5]);
+		conn[N + 1] = conn[3];
+		conn[N + 2] = conn[4];
+		conn[N + 3] = conn[0];
+		conn[N + 4] = conn[1];
+		connected[i][39] = getIndex(&conn[5]);
+		conn[N + 1] = conn[3];
+		conn[N + 2] = conn[4];
+		conn[N + 3] = conn[1];
+		conn[N + 4] = conn[0];
+		connected[i][40] = getIndex(&conn[5]);
+		conn[N + 1] = conn[4];
+		conn[N + 2] = conn[0];
+		conn[N + 3] = conn[1];
+		conn[N + 4] = conn[3];
+		connected[i][41] = getIndex(&conn[5]);
+		conn[N + 1] = conn[4];
+		conn[N + 2] = conn[0];
+		conn[N + 3] = conn[3];
+		conn[N + 4] = conn[1];
+		connected[i][42] = getIndex(&conn[5]);
+		conn[N + 1] = conn[4];
+		conn[N + 2] = conn[1];
+		conn[N + 3] = conn[0];
+		conn[N + 4] = conn[3];
+		connected[i][43] = getIndex(&conn[5]);
+		conn[N + 1] = conn[4];
+		conn[N + 2] = conn[1];
+		conn[N + 3] = conn[3];
+		conn[N + 4] = conn[0];
+		connected[i][44] = getIndex(&conn[5]);
+		conn[N + 1] = conn[4];
+		conn[N + 2] = conn[3];
+		conn[N + 3] = conn[0];
+		conn[N + 4] = conn[1];
+		connected[i][45] = getIndex(&conn[5]);
+		conn[N + 1] = conn[4];
+		conn[N + 2] = conn[3];
+		conn[N + 3] = conn[1];
+		conn[N + 4] = conn[0];
+		connected[i][46] = getIndex(&conn[5]);
 
+		conn[N] = conn[3];
+		conn[N + 1] = conn[0];
+		conn[N + 2] = conn[1];
+		conn[N + 3] = conn[4];
+		conn[N + 4] = conn[2];
+		connected[i][47] = getIndex(&conn[5]);
+		conn[N + 1] = conn[0];
+		conn[N + 2] = conn[2];
+		conn[N + 3] = conn[4];
+		conn[N + 4] = conn[1];
+		connected[i][48] = getIndex(&conn[5]);
+		conn[N + 1] = conn[0];
+		conn[N + 2] = conn[4];
+		conn[N + 3] = conn[1];
+		conn[N + 4] = conn[2];
+		connected[i][49] = getIndex(&conn[5]);
+		conn[N + 1] = conn[0];
+		conn[N + 2] = conn[4];
+		conn[N + 3] = conn[2];
+		conn[N + 4] = conn[1];
+		connected[i][50] = getIndex(&conn[5]);
+		conn[N + 1] = conn[1];
+		conn[N + 2] = conn[0];
+		conn[N + 3] = conn[4];
+		conn[N + 4] = conn[2];
+		connected[i][51] = getIndex(&conn[5]);
+		conn[N + 1] = conn[1];
+		conn[N + 2] = conn[2];
+		conn[N + 3] = conn[4];
+		conn[N + 4] = conn[0];
+		connected[i][52] = getIndex(&conn[5]);
+		conn[N + 1] = conn[1];
+		conn[N + 2] = conn[4];
+		conn[N + 3] = conn[0];
+		conn[N + 4] = conn[2];
+		connected[i][53] = getIndex(&conn[5]);
+		conn[N + 1] = conn[1];
+		conn[N + 2] = conn[4];
+		conn[N + 3] = conn[2];
+		conn[N + 4] = conn[0];
+		connected[i][54] = getIndex(&conn[5]);
+		conn[N + 1] = conn[2];
+		conn[N + 2] = conn[0];
+		conn[N + 3] = conn[4];
+		conn[N + 4] = conn[1];
+		connected[i][55] = getIndex(&conn[5]);
+		conn[N + 1] = conn[2];
+		conn[N + 2] = conn[1];
+		conn[N + 3] = conn[4];
+		conn[N + 4] = conn[0];
+		connected[i][56] = getIndex(&conn[5]);
+		conn[N + 1] = conn[2];
+		conn[N + 2] = conn[4];
+		conn[N + 3] = conn[0];
+		conn[N + 4] = conn[1];
+		connected[i][57] = getIndex(&conn[5]);
+		conn[N + 1] = conn[2];
+		conn[N + 2] = conn[4];
+		conn[N + 3] = conn[1];
+		conn[N + 4] = conn[0];
+		connected[i][58] = getIndex(&conn[5]);
+		conn[N + 1] = conn[4];
+		conn[N + 2] = conn[0];
+		conn[N + 3] = conn[1];
+		conn[N + 4] = conn[2];
+		connected[i][59] = getIndex(&conn[5]);
+		conn[N + 3] = conn[2];
+		conn[N + 4] = conn[1];
+		connected[i][60] = getIndex(&conn[5]);
+		conn[N + 2] = conn[1];
+		conn[N + 3] = conn[0];
+		conn[N + 4] = conn[2];
+		connected[i][61] = getIndex(&conn[5]);
+		conn[N + 3] = conn[2];
+		conn[N + 4] = conn[0];
+		connected[i][62] = getIndex(&conn[5]);
+		conn[N + 2] = conn[2];
+		conn[N + 3] = conn[0];
+		conn[N + 4] = conn[1];
+		connected[i][63] = getIndex(&conn[5]);
+		conn[N + 3] = conn[1];
+		conn[N + 4] = conn[0];
+		connected[i][64] = getIndex(&conn[5]);
+
+		conn[N] = conn[4];
+
+		for (int k = 0; k < 4; k++)
+			dong3[k] = conn[k];
+		for (int k = 1; k < 4; k++)
+			for (int j = k; j > 0 && dong3[j - 1] > dong3[j]; j--) {
+				kk = dong3[j];
+				dong3[j] = dong3[j - 1];
+				dong3[j - 1] = kk;
+			}
+		for (int k = 0; k < 4; k++)
+			conn[k + 1 + N] = dong3[k];
+
+		int cutconnected = getIndex(&conn[5]);
+
+		for (int j = 65; j <= 88; j++) {
+			connected[i][j] = cutconnected + j - 65;
+		}
 	}
 
 	stopit = factval[N];
