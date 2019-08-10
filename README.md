@@ -35,3 +35,7 @@ A graphic explanation of the getHashValue function
 
 ![image](https://i.imgur.com/QQyH8UT.jpg)
 
+**Today**
+
+I have decided to close my project and move on to uni studies and other side projects. Unfortunatelly the speed up I envisioned from my system was not sufficiently great, and now that the official community and repo has moved to a distributed way of solving the problem it would be hard to reach the same results. Anyways I had great fun working on it, and I learned a lot, and I would also like to thank the superpermutators community, a very nice group of heterogeneus people working together on a very fun and interesting project.
+
